@@ -1,14 +1,12 @@
 const { Schema } = require('mongoose')
 
 
-const commnentSchema = new Schema(
+const commentSchema = new Schema(
     {
 	comment: {
 		type: String,
 		required: true,
             unique: true,
-        reactions: [reactionSchema]
-        
 	},
     });
 const reactionSchema = new {
@@ -19,6 +17,6 @@ const reactionSchema = new {
 
 
 
-module.exports = commnentSchema;
-    
+module.exports = { commentSchema, reactionSchema };
+
 
