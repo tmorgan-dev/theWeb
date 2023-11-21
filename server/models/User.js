@@ -21,7 +21,7 @@ const userSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		savedComments: [commentSchema],
+		savedPost: [postSchema],
 	},
 	{
 		toJSON: {
