@@ -34,15 +34,17 @@ type Query {
 }
 
 type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth
+    createUser(username: String!, email: String!, password: String!): User
     loginUser(email: String!, password: String!): Auth
     addFriend(username: String!): User
     deleteFriend(_id: ID!): User
-    savedPost(username: post_id): User
+    savedPost(username: String!): User
     deletePost(_id: ID!): User
     savedComment(_id: ID!): User
     deleteComment(_id: ID!): User
-    savedReaction(post_id: ID!): User
-    deleteReaction(post_id: ID!): User
-}
+    savedReaction(_id: ID!): User
+    deleteReaction(_id: ID!): User
+  }
 `
+
+module.exports = typeDefs

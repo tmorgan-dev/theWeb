@@ -3,20 +3,19 @@ const path = require('path');
 const db = require('./config/connection');
 // const routes = require('./routes');
 const { ApolloServer } = require('@apollo/server');
-const {
-	expressMiddleware,
-} = require('@apollo/server/express4');
+const { expressMiddleware } = require('@apollo/server/express4');
 
 const { typeDefs, resolvers } = require('./schemas');
 
 const { authMiddleware } = require('./utils/auth');
 
 const PORT = process.env.PORT || 3001;
-const app = express();
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
 });
+
+const app = express();
 
 const startApolloServer = async () => {
 	await server.start();
