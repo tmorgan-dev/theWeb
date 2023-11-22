@@ -54,15 +54,19 @@ const resolvers = {
             postAuthor: context.user.username,
           });
   
+         const thisPost =  await Post.findOne({
+            postText: post.postText 
+            
+          })
           await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $addToSet: { posts: post._id } }
+            { $addToSet: { posts: thisPost._id } }
           );
   
           return post;
         }
-        throw AuthenticationError;
-        ('You need to be logged in!');
+        // throw AuthenticationError;
+        // ('You need to be logged in!');
       },
       savedComment: async (parent, { postId, commentText }, context) => {
         if (context.user) {
