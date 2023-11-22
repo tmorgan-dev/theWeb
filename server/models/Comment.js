@@ -20,7 +20,7 @@ const commentSchema = new Schema(
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId(),
         },
-        commentBody: {
+        commentText: {
             type: String,
             required: true,
             maxLength: 280,
