@@ -6,7 +6,6 @@ type User {
     friendCount: Int
     savedPost: [ Post ]
     savedComment: [ Comment ]
-    savedReaction: [ Reaction ]
 }
 
 type Post {
@@ -19,11 +18,6 @@ type Comment {
     comment: String
 }
 
-type Reaction {
-    _id: ID!
-    image: String
-}
-
 type Auth {
     token: ID!
     user: User
@@ -31,6 +25,11 @@ type Auth {
 
 type Query {
     me: User
+    user(username: String!): User
+    posts(username: String): [Post]
+    post(postId: ID!): Post
+    users: [User]
+    
 }
 
 type Mutation {
@@ -42,9 +41,17 @@ type Mutation {
     deletePost(_id: ID!): User
     savedComment(_id: ID!): User
     deleteComment(_id: ID!): User
-    savedReaction(_id: ID!): User
-    deleteReaction(_id: ID!): User
   }
 `
 
 module.exports = typeDefs
+
+// savedReaction: [ Reaction ]
+
+// type Reaction {
+//     _id: ID!
+//     image: String
+// }
+
+// savedReaction(_id: ID!): User
+// deleteReaction(_id: ID!): User

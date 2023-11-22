@@ -28,7 +28,7 @@ const commentSchema = new Schema(
         reactionIcon: {
             type: String,
         },
-        username: {
+        commentAuthor: {
             type: String,
             required: true,
         },
