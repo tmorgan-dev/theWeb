@@ -10,7 +10,11 @@ type User {
 
 type Post {
     _id: ID!
-    post: String
+    postText: String
+}
+
+input Postinput {
+    postText: String!
 }
 
 type Comment {
@@ -37,12 +41,12 @@ type Mutation {
     loginUser(email: String!, password: String!): Auth
     addFriend(username: String!): User
     deleteFriend(_id: ID!): User
-    savedPost(username: String!): User
+    savedPost(postText: Postinput): User
     deletePost(_id: ID!): User
     savedComment(_id: ID!): User
     deleteComment(_id: ID!): User
   }
-`
+`;
 
 module.exports = typeDefs
 
