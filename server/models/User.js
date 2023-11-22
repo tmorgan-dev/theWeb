@@ -19,6 +19,15 @@ const userSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		pic: {
+			type: String,
+		},
+		location: {
+			type: String,
+		},
+		bio: {
+			type: String,
+		},
 		posts: [
 			{
 				type: Schema.Types.ObjectId,
