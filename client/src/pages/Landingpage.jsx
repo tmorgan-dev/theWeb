@@ -1,11 +1,15 @@
 // import { Link } from 'react-router-dom';
-import {React} from 'react';
+import { React } from 'react';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
 
-export default function Landingpage() {
-	<div>
-		<Login />
-		<Signup />
-	</div>;
-}
+const Landingpage = () => {
+	return (
+		<div>
+			<Login />
+			<Signup />
+		</div>
+	);
+};
+
+export default Landingpage;
