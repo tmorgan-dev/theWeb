@@ -1,8 +1,9 @@
 // import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './components/Header';
-import Landingpage from './pages/Landingpage';
-import Mainpage from './pages/Mainpage';
+import Header from './components/Header/Header';
+import Landingpage from './pages/Landing/Landingpage';
+import Mainpage from './pages/Main/Mainpage';
+import Footer from './components/Footer/Footer';
 
 
 //needs appollo inports etc
@@ -16,6 +17,7 @@ function App() {
 			{/* <Outlet /> */}
 			//turning off outlet atm, causing multiple renders of same components
 			<Mainpage />
+			<Footer />
 		</>
 	);
 }
