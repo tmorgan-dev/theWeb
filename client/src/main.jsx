@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import { Outlet } from 'react-router-dom';
-import App from './App.jsx';
 import './index.css';
 import {
 	createBrowserRouter,
 	RouterProvider,
 } from 'react-router-dom';
-import Landing from '../src/pages/Landingpage.jsx'
-import Mainpage from '../src/pages/Mainpage'
+import App from './App.jsx';
+import Error from './pages/Error/Error.jsx'
+import Landing from '../src/pages/Landing/Landingpage.jsx'
+import Mainpage from '../src/pages/Main/Mainpage.jsx'
 
 // /** @type {import('tailwindcss').Config} */
 // module.exports = {
