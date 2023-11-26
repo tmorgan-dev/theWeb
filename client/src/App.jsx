@@ -1,5 +1,5 @@
 // import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+//import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Landingpage from './pages/Landing/Landingpage';
 import Mainpage from './pages/Main/Mainpage';
@@ -15,7 +15,7 @@ function App() {
 			<Header />
 			<Landingpage />
 			{/* <Outlet /> */}
-			//turning off outlet atm, causing multiple renders of same components
+			{/*turning off outlet atm, causing multiple renders of same components*/}
 			<Mainpage />
 			<Footer />
 		</>
