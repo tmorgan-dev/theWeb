@@ -1,16 +1,19 @@
 import { React } from 'react';
+import spoderLogo from '../../assets/images/SPODER.png';
+import './style.css'
 
 //pending login for usemutation and signup
 const Login = () => {
 	return (
-		<div className='min-h-screen flex items-center justify-center'>
-			<div className='bg-white p-8 shadow-md rounded-md w-96'>
-				<h2 className='text-2xl font-bold mb-4'>Login</h2>
+		<div className='login min-h-screen flex items-center justify-center'>
+			<div className='bg-white bg-opacity-20 px-8 shadow-md rounded-md w-96'>
+				<img src={spoderLogo} alt='spider logo' width='278' height='180'></img>
+				<h2 className='text-2xl font-bold mb-3'>Login</h2>
 				<form>
 					<div className='mb-4'>
 						<label
 							htmlFor='username'
-							className='block text-gray-600 text-sm font-medium mb-2'
+							className='block text-gray-300 text-sm font-medium mb-2'
 						>
 							Username
 						</label>
@@ -24,7 +27,7 @@ const Login = () => {
 					<div className='mb-4'>
 						<label
 							htmlFor='password'
-							className='block text-gray-600 text-sm font-medium mb-2'
+							className='block text-gray-300 text-sm font-medium mb-2'
 						>
 							Password
 						</label>
@@ -37,10 +40,14 @@ const Login = () => {
 					</div>
 					<button
 						type='submit'
-						className='w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue'
+						className='w-full bg-purple-950 text-white p-1 rounded-md hover:bg-purple-400 focus:outline-none focus:shadow-outline-blue'
 					>
 						Login
 					</button>
+					<div className='register'>
+						<p>Don't Have an Account?</p>
+						<a href='' className='text-purple-300 hover:text-purple-200'>Register Here</a>
+					</div>
 				</form>
 			</div>
 		</div>

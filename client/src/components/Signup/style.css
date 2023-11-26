@@ -1,0 +1,24 @@
+.signup {
+    background:#27192D;
+    font-family: 'Dosis', sans-serif;
+    width: 100%;
+}
+
+.signup h2{
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+}
+
+.signup button{
+    height: 40px;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.signup .signin {
+    font-size: 0.9em;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0 15px;
+}
