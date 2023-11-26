@@ -1,0 +1,25 @@
+.login {
+    background:#1a111e;
+    font-family: 'Dosis', sans-serif;
+    width: 100%;
+}
+
+.login h2{
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+}
+
+.login button{
+    height: 40px;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.login .register {
+    font-size: 0.9em;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
