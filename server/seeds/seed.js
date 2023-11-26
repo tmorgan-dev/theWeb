@@ -7,18 +7,31 @@ const cleanDB = require('./cleanDB');
 db.once('open', async () => {
     try {
         await cleanDB('Post', 'posts');
-
         await cleanDB('User', 'users');
-
+        
         await User.create(userSeeds);
 
         for (let i = 0; i < postSeeds.length; i++) {
-            const { _id, postAuthor } = await Post.create(postSeeds[i]);
-            const user = await User.findOneAndUpdate(
+            const { postText, postAuthor, comments } = postSeeds[i];
+            const { _id: postId } = await Post.create({ postText, postAuthor });
+            if (comments && comments.length > 0) {
+                await Post.findOneAndUpdate(
+                    { _id: postId },
+                    {
+                        $push: {
+                            comments: comments.map(({ commentText, commentAuthor }) => ({
+                                commentText,
+                                commentAuthor,
+                            })),
+                        },
+                    }
+                );
+            }
+            await User.findOneAndUpdate(
                 { username: postAuthor },
                 {
                     $addToSet: {
-                        thoughts: _id,
+                        thoughts: postId,
                     },
                 }
             );
@@ -27,7 +40,6 @@ db.once('open', async () => {
         console.error(err);
         process.exit(1);
     }
-
     console.log('all done!');
     process.exit(0);
 });
