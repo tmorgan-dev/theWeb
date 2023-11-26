@@ -1,0 +1,11 @@
+footer {
+    position: fixed;
+    background:#27192D;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+}
+
+footer .hover\:text-aqua:hover {
+    color: aqua;
+}

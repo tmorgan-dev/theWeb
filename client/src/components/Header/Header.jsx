@@ -1,9 +1,12 @@
+import React from "react";
+import './style.css'
+
 function Header() {
 	return (
-		<header className='header'>
-            <div>Welcome to The Web </div>
+		<nav className='text-white p-2 fixed w-full top-O'>
+            <div className='container-fluid'>Welcome to The Web</div>
             {/* add lil spider web after this?  */}
-		</header>
+		</nav>
 	);
 }
 export default Header;
