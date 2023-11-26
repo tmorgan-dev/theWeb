@@ -25,9 +25,9 @@ const commentSchema = new Schema(
             required: true,
             maxLength: 280,
         },
-        reactionIcon: {
-            type: String,
-        },
+        // reactionIcon: {
+        //     type: String,
+        // },
         commentAuthor: {
             type: String,
             required: true,
