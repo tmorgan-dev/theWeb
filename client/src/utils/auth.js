@@ -1,6 +1,6 @@
 // pending auth
 // import decode from 'jwt-decode';  not sure this is viable in current version 
-import { jwtDecode } from 'jwt-decode';
+// import { jwtDecode } from 'jwt-decode';
 
 
 class AuthService {
