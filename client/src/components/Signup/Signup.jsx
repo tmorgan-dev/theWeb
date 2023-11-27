@@ -14,16 +14,18 @@ const Signup = () => {
 		email: '',
 		password: '',
 	});
-	const [addUser] = useMutation(ADD_USER);
+	// console.log(signupForm);
+	const [createUser] = useMutation(ADD_USER);
 
 
 	const handleInput = (event) => {
 		const { name, value } = event.target;
 		setUserFormData({ ...signupForm, [name]: value });
 	};
+		// console.log(signupForm);
+
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
-		setValidated(true);
 
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
@@ -32,26 +34,23 @@ const Signup = () => {
 		}
 
 		try {
-			const mutation = await addUser({
+			const mutation = await createUser({
 				variables: {
-					username: setUserFormData.username,
-					email: setUserFormData.email,
-					password: setUserFormData.password,
+					username: signupForm.username,
+					email: signupForm.email,
+					password: signupForm.password,
 				},
 			});
+			console.log(mutation);
 
-			const token = mutation.data.addUser.token;
+			const token = mutation.data.createUser.token;
+console.log(token);
 			Auth.login(token);
 		} catch (error) {
 			console.error(error);
 
 		}
 
-		setUserFormData({
-			username: '',
-			email: '',
-			password: '',
-		});
 	};
 
 	return (
@@ -68,19 +67,18 @@ const Signup = () => {
 					<form onSubmit={handleFormSubmit}>
 						<div className='mb-4'>
 							<label
-								htmlFor='fullName'
+								htmlFor='username'
 								className='block text-gray-300 text-sm font-medium mb-2'
 							>
-								Full Name
+								User Name
 							</label>
 							<input
 								type='text'
-								id='fullName'
-								name='fullName'
+								id='username'
+								name='username'
 								value={signupForm.username}
 								onChange={handleInput}
 								className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500'
-								
 							/>
 						</div>
 						<div className='mb-4'>
