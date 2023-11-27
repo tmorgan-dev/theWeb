@@ -1,5 +1,7 @@
 // pending auth
-import decode from 'jwt-decode';
+// import decode from 'jwt-decode';  not sure this is viable in current version 
+import { jwtDecode } from 'jwt-decode';
+
 
 class AuthService {
   getProfile() {
@@ -14,7 +16,7 @@ class AuthService {
 
   isTokenExpired(token) {
     // Decode the token to get its expiration time that was set by the server
-    const decoded = decode(token);
+    const decoded = jwtDecode(token);
     // If the expiration time is less than the current time (in seconds), the token is expired and we return `true`
     if (decoded.exp < Date.now() / 1000) {
       localStorage.removeItem('id_token');
