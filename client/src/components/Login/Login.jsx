@@ -54,7 +54,7 @@ const Login = ({ onToggleView }) => {
 							htmlFor='email'
 							className='block text-gray-300 text-sm font-medium mb-2'
 						>
-							Username
+							Email Address
 						</label>
 						<input
 							type='text'
