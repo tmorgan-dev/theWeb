@@ -1,8 +1,11 @@
+import Profile from '../../components/Profile/Profile'
+
 const Mainpage = () => {
 	return (
 	<div className="flex h-screen">
-		<div className="w-1/4 bg-gray-200">
+		<div className="w-1/4 bg-purple-1000 mt-14 pt-9">
 		{/* Content for Left Column */}
+		<Profile />
 		{/* profile page here */}
 		</div>
 		<div className="w-1/2 bg-gray-300">
