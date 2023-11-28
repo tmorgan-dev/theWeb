@@ -1,0 +1,15 @@
+.profile {
+    font-family: 'Dosis', sans-serif;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+.profile .profilePic {
+    width: 240px;
+    height: 240px;
+}
+
+.profile .profileName {
+    font-size: 60px;
+}
