@@ -4,13 +4,15 @@ import './style.css';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutation';
+// import { useNavigate } from "react-router-dom";
 
 import Auth from '../../utils/auth'
 
 const Login = ({ onToggleView }) => {
+	// const navigate =  useNavigate()
 
 	const [loginForm, setLoginData] = useState({ email: '', password: '' });
-	const [loginUser, { error, data }] =
+	const [loginUser, { error }] =
 		useMutation(LOGIN_USER);
 	// update state based on form input changes
 	const handleChange = (event) => {
@@ -28,15 +30,18 @@ const Login = ({ onToggleView }) => {
 		const { data } = await loginUser({
 			variables: { ...loginForm },
 		});
-		Auth.login(data.login.token);
+		Auth.login(data.loginUser.token);
+	console.log('anything')
+		// navigate("/mainpage")
+	
 	} catch (e) {
 		console.error(e);
 	}
 	// clear form values
-	setLoginData({
-		email: '',
-		password: '',
-	});
+	// setLoginData({
+	// 	email: '',
+	// 	password: '',
+	// });
 	};
 	return (
 		<div className='login min-h-screen flex items-center justify-center'>

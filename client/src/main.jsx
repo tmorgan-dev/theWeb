@@ -42,7 +42,7 @@ const router = createBrowserRouter([
 				//hold our signup function/signin function, should be the index page (first page to load)
 			},
 			{
-				path: 'mainpage',
+				path: '/mainpage',
 				element: <Mainpage />,
 				//main page will hold the profile.feed/friendlist etc
 			},
