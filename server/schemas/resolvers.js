@@ -30,6 +30,7 @@ const resolvers = {
         const token = signToken(user);
         return { token, user };
       },
+      
       loginUser: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   

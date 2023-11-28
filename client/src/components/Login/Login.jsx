@@ -9,8 +9,9 @@ import Auth from '../../utils/auth'
 
 const Login = ({ onToggleView }) => {
 
-	const [loginForm, setLoginData] = useState({ username: '', password: '' });
-	const [login, { error, data }] = useMutation(LOGIN_USER);
+	const [loginForm, setLoginData] = useState({ email: '', password: '' });
+	const [loginUser, { error, data }] =
+		useMutation(LOGIN_USER);
 	// update state based on form input changes
 	const handleChange = (event) => {
 	const { name, value } = event.target;
@@ -24,8 +25,8 @@ const Login = ({ onToggleView }) => {
 	event.preventDefault();
 	console.log(loginForm);
 	try {
-		const { data } = await login({
-		variables: { ...loginForm },
+		const { data } = await loginUser({
+			variables: { ...loginForm },
 		});
 		Auth.login(data.login.token);
 	} catch (e) {
@@ -33,7 +34,7 @@ const Login = ({ onToggleView }) => {
 	}
 	// clear form values
 	setLoginData({
-		username: '',
+		email: '',
 		password: '',
 	});
 	};
@@ -45,17 +46,19 @@ const Login = ({ onToggleView }) => {
 				<form onSubmit={handleFormSubmit}>
 					<div className='mb-4'>
 						<label
-							htmlFor='username'
+							htmlFor='email'
 							className='block text-gray-300 text-sm font-medium mb-2'
 						>
 							Username
 						</label>
 						<input
 							type='text'
-							id='username'
-							name='username'
-							className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500' value={loginForm.username}
+							id='email'
+							name='email'
+							className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500' value={loginForm.email}
+							
 							onChange={handleChange}
+							
 						/>
 					</div>
 					<div className='mb-4'>
@@ -71,6 +74,7 @@ const Login = ({ onToggleView }) => {
 							name='password'
 							className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500' value={loginForm.password}
 							onChange={handleChange}
+							
 						/>
 					</div>
 					<button
