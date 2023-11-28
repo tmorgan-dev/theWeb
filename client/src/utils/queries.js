@@ -68,7 +68,8 @@ export const QUERY_ME = gql`
         postAuthor
       }
       friends {
-        user: [User]
+        _id
+        username
       }
     }
   }

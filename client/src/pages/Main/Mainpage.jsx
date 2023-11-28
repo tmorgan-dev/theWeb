@@ -1,3 +1,4 @@
+import FriendList from '../../components/FriendList/FriendList';
 import Profile from '../../components/Profile/Profile'
 import Feed from '../../components/Feed/Feed';
 

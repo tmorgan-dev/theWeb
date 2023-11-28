@@ -3,14 +3,21 @@ type User {
     _id: ID!
     username: String!
     email: String
+    pic: String
+    location: String
+    bio: String
+    posts: [Post]
     friendCount: Int
-    savedPost: [ Post ]
-    savedComment: [ Comment ]
+    friends: [User]
+
 }
 
 type Post {
     _id: ID!
     postText: String
+    createdAt: String
+    postAuthor: String
+    comments: [Comment]
 }
 
 input Postinput {
@@ -19,12 +26,20 @@ input Postinput {
 
 type Comment {
     _id: ID!
-    comment: String
+    commentText: String!
+    commentAuthor: String!
+    createdAt: String
+
+
 }
 
 type Auth {
     token: ID!
     user: User
+}
+type Friend {
+    _id: ID!
+    username: String
 }
 
 type Query {
