@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { ADD_USER } from '../../utils/mutation'
 import { QUERY_ME } from "../../utils/queries";
 
-const AddUser = ({username}) => {
+const AddUser = ({}) => {
     return (
 
         <div>
