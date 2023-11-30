@@ -58,15 +58,25 @@ export const ALL_USERS = gql`
 `;
 
 
+// export const QUERY_POSTS = gql`
+// 	query getPosts {
+// 		post {
+// 			_id
+// 			postText
+// 			postAuthor
+// 			createdAt
+// 		}
+// 	}
+// `;
 export const QUERY_POSTS = gql`
-	query getPosts {
-		post {
-			_id
-			postText
-			postAuthor
-			createdAt
-		}
-	}
+  query getPosts($postAuthor: String!) {
+    posts(postAuthor: $postAuthor) {
+      _id
+      postText
+      postAuthor
+      createdAt
+    }
+  }
 `;
 
 export const QUERY_SINGLE_POST = gql`

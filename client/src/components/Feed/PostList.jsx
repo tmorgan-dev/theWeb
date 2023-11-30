@@ -1,4 +1,4 @@
-import AddComment from './AddComment';
+// import AddComment from './AddComment';
 //import React from 'react';
 
 /**************************************** 
@@ -26,20 +26,61 @@ const PostList = ({ posts, postText }) => {
 I also think I could take the AddComment.jsx component and add it in here instead so we don't need to pass any props from THIS file- comment needs postId otherwise I'd say it's probably fine the way it is.
 
 ***************************************/
-const PostList = () => {
+// const PostList = () => {
+
+//     return (
+//         <>
+//         <div className=" w-full rounded-lg p-4 text-white overflow-y-auto overallFont">
+//         <div className="postBg w-full rounded-lg shadow-md p-4">
+//         <div className="font-bold">username{/* Add in the postAuthor */}</div>
+//           <div className="font-bold mt-2">Titled post!{/* Add in the postTitle */}</div>
+//           <div>This is a post for example sake wow{/* Add in the postText */}</div>
+//           <AddComment />
+//           </div>
+//           </div>
+//       </>
+//       )
+//     }
+
+// export default PostList;
+// ---
+
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_POSTS } from '../../utils/queries';
+import AuthService from '../../utils/auth';
+
+const Posts = () => {
+    const user = AuthService.getProfile();
+    const authToken = AuthService.getToken();
+    console.log('Authentication Token:', authToken);
+
+    const postAuthor = user.username;
+    const { data } = useQuery(QUERY_POSTS, {
+        variables: { postAuthor },
+        context: { headers: { Authorization: `Bearer ${authToken}` } },
+    });
+    console.log("POST DATA:", data)
+    if (!data || !data.posts) return <p>No posts found</p>;
+
+    const { posts } = data;
 
     return (
-        <>
-        <div className=" w-full rounded-lg p-4 text-white overflow-y-auto overallFont">
-        <div className="postBg w-full rounded-lg shadow-md p-4">
-        <div className="font-bold">username{/* Add in the postAuthor */}</div>
-          <div className="font-bold mt-2">Titled post!{/* Add in the postTitle */}</div>
-          <div>This is a post for example sake wow{/* Add in the postText */}</div>
-          <AddComment />
-          </div>
-          </div>
-      </>
-      )
-    }
+        <div>
+            <h1>Your Posts</h1>
+            <ul>
+                {posts.map((post) => (
+                    <li key={post._id}>
+                        <p>{post.postText}</p>
+                        <p>Author: {post.postAuthor}</p>
+                        <p>Created At: {post.createdAt}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
-export default PostList;
+export default Posts;
+
+

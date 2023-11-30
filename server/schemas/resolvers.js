@@ -10,7 +10,7 @@ const resolvers = {
 			return User.find().populate('posts');
 		},
 		friends: async (parent, { _id, username }) => {
-			
+
 			return User.find({ _id, username })
 		},
 		user: async (parent, { username }) => {
@@ -20,10 +20,16 @@ const resolvers = {
 				.populate('friends')
 			// changed back to populate friends and posts in gql
 		},
+		// posts: async (parent, { username }) => {
+		// 	const params = username ? { username } : {};
+		// 	return Post.find(params).sort({ createdAt: -1 });
+		// },
 		posts: async (parent, { username }) => {
-			const params = username ? { username } : {};
-			return Post.find(params).sort({ createdAt: -1 });
+			const params = username ? { postAuthor: username } : {};
+			const posts = await Post.find(params).sort({ createdAt: -1 });
+			return posts;
 		},
+
 		post: async (parent, { postId }) => {
 			return Post.findOne({ _id: postId });
 		},
@@ -70,16 +76,16 @@ const resolvers = {
 		},
 		addPost: async (parent, { postText }, context) => {
 			if (context.user) {
-			const post = await Post.create({
-				postText,
-				postAuthor: context.user.username,
-			});
+				const post = await Post.create({
+					postText,
+					postAuthor: context.user.username,
+				});
 
-			await User.findOneAndUpdate(
-				{ _id: context.user._id },
-				{ $addToSet: { posts: post._id } }
-			);
-			return post;
+				await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $addToSet: { posts: post._id } }
+				);
+				return post;
 			}
 			throw AuthenticationError;
 		},
@@ -121,16 +127,16 @@ const resolvers = {
 		},
 		addComment: async (parent, { postId, commentText }) => {
 			return Post.findOneAndUpdate(
-			  { _id: postId },
-			  {
-				$addToSet: { comments: { commentText } },
-			  },
-			  {
-				new: true,
-				runValidators: true,
-			  }
+				{ _id: postId },
+				{
+					$addToSet: { comments: { commentText } },
+				},
+				{
+					new: true,
+					runValidators: true,
+				}
 			);
-		  },
+		},
 		savedComment: async (
 			parent,
 			{ postId, commentText },
