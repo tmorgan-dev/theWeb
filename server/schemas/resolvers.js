@@ -9,10 +9,16 @@ const resolvers = {
 		users: async () => {
 			return User.find().populate('posts');
 		},
+		friends: async (parent, { _id, username }) => {
+			
+			return User.find({ _id, username })
+		},
 		user: async (parent, { username }) => {
+			console.log(username);
 			return User.findOne({ username })
 				.populate('posts')
-				.populate('friends');
+				.populate('friends')
+			// changed back to populate friends and posts in gql
 		},
 		posts: async (parent, { username }) => {
 			const params = username ? { username } : {};
@@ -23,9 +29,9 @@ const resolvers = {
 		},
 		me: async (parent, args, context) => {
 			if (context.user) {
-				return User.findOne({ _id: context.user._id }).populate(
-					'posts'
-				);
+				return User.findOne({ _id: context.user._id })
+					.populate('posts')
+					.populate('friends');
 			}
 			throw AuthenticationError;
 		},
@@ -170,7 +176,11 @@ const resolvers = {
 			}
 			throw AuthenticationError;
 		},
-		addFriend: async (parent, { friendsId,  username }, context) => {
+		addFriend: async (
+			parent,
+			{ friendsId, username },
+			context
+		) => {
 			if (context.user) {
 				const updatedUser = await User.findOneAndUpdate(
 					{ _id: context.user._id },

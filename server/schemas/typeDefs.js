@@ -8,9 +8,10 @@ type User {
     bio: String
     posts: [Post]
     friendCount: Int
-    friends: [User]
+    friends: [Friend]
 
 }
+
 
 type Post {
     _id: ID!
@@ -46,6 +47,7 @@ type Query {
     posts(username: String): [Post]
     post(postId: ID!): Post
     users: [User]
+    friends( _id: ID!, username: String!): [Friend]
     
 }
 
@@ -64,6 +66,7 @@ type Mutation {
 `;
 
 module.exports = typeDefs
+
 
 // savedReaction: [ Reaction ]
 
