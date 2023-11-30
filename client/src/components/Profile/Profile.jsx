@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
-// Placeholder pic until option is created for user to select other images or upload personal profile image
+import { FaGithub, FaLinkedin, FaInstagram, FaStackOverflow } from 'react-icons/fa6';
 import dragonFly from '../../assets/images/Dragonfly.png';
 import './style.css';
-// import { FaLinkedin, FaGithub, FaInstagram, FaStackOverflow } from 'react-icons/fa6';
 
 function Profile () {
     // const [userName, setUserName] = useState('');
@@ -31,13 +30,32 @@ function Profile () {
                 // TODO: Build form to input Bio data and social media links/data
                 userBio: data.me.bio || 'I am a software engineer. Yay!', 
                 userGitHub: data.me.gitHub || '',
-                userLinkedIn: data.me.linkedIn || 'https://www.linkedin.com/in/brittany-brimley-390a81293/',
+                userLinkedIn: data.me.linkedIn || '',
                 userInstagram: data.me.instagram || '',
                 userStackOverflow: data.me.stackOverflow || '',
             });
         }
     }, [data])
 
+    const [gitIcon, pickGitIcon] = useState(false);
+    const [linkIcon, pickLinkIcon] = useState(false);
+    const [instaIcon, pickInstaIcon] = useState(false);
+    const [stackIcon, pickStackIcon] = useState(false);
+
+    const stylesheet = {
+        hover: {
+            backgroundColor: 'black',
+            border: '2px solid violet',
+            color: 'white',
+            font: 'bold',
+        },
+        after: {
+            backgroundColor: 'black',
+            border: '2px solid white',
+            color: 'aqua',
+            font: 'bold',
+        },
+    };
 
     return (
         <div className='profile'>
@@ -51,18 +69,52 @@ function Profile () {
             <div className='bio mb-5'>{userInfo.userBio}</div>
 
             {/* TODO: Add icons to social media links */}
-            <a href={ userInfo.userGitHub } target='_blank'>
-                <h2>GitHub:</h2>
-            </a>
-            <a href={ userInfo.userLinkedIn } target='_blank'>
-                <h2>LinkedIn:</h2>
-            </a>
-            <a href={ userInfo.userInstagram } target='_blank'>
-                <h2>Instagram:</h2>
-            </a>
-            <a href={ userInfo.userStackOverflow } target='_blank'>
-                <h2>StackOverflow:</h2>
-            </a>
+            <div className='container flex justify-center'>
+                <a className='btn p-1 m-1 rounded-full inline-block' 
+                    href={ userInfo.userGitHub } 
+                    target='_blank' 
+                    role='button'
+                    style={{ ...gitIcon ? stylesheet.hover : stylesheet.after 
+                    }} onMouseEnter={() => {
+                        pickGitIcon(true)
+                    }} onMouseLeave={() => {
+                        pickGitIcon(false)
+                    }}><FaGithub />
+                </a>
+                <a className='btn p-1 m-1 rounded-full inline-block' 
+                    href={ userInfo.userLinkedIn } 
+                    target='_blank' 
+                    role='button'
+                    style={{ ...linkIcon ? stylesheet.hover : stylesheet.after 
+                    }} onMouseEnter={() => {
+                        pickLinkIcon(true)
+                    }} onMouseLeave={() => {
+                        pickLinkIcon(false)
+                    }}><FaLinkedin />
+                </a>
+                <a className='btn p-1 m-1 rounded-full inline-block' 
+                    href={ userInfo.userInstagram } 
+                    target='_blank' 
+                    role='button'
+                    style={{ ...instaIcon ? stylesheet.hover : stylesheet.after 
+                    }} onMouseEnter={() => {
+                        pickInstaIcon(true)
+                    }} onMouseLeave={() => {
+                        pickInstaIcon(false)
+                    }}><FaInstagram />
+                </a>
+                <a className='btn p-1 m-1 rounded-full inline-block' 
+                    href={ userInfo.userStackOverflow } 
+                    target='_blank' 
+                    role='button'
+                    style={{ ...stackIcon ? stylesheet.hover : stylesheet.after 
+                    }} onMouseEnter={() => {
+                        pickStackIcon(true)
+                    }} onMouseLeave={() => {
+                        pickStackIcon(false)
+                    }}><FaStackOverflow />
+                </a>
+            </div>
         </div>
     );
 }
