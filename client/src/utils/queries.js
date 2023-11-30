@@ -7,6 +7,10 @@ export const QUERY_USER = gql`
 			_id
 			username
 			bio
+			gitHub
+			linkedIn
+			instagram
+			stackOverflow
 			email
 			friendCount
 			friends {
@@ -91,6 +95,10 @@ export const QUERY_ME = gql`
 			pic
 			location
 			bio
+			gitHub
+			linkedIn
+			instagram
+			stackOverflow
 			posts {
 				_id
 				postText

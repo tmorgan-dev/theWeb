@@ -28,6 +28,18 @@ const userSchema = new Schema(
 		bio: {
 			type: String,
 		},
+		gitHub: {
+			type: String,
+		},
+		linkedIn: {
+			type: String,
+		},
+		instagram: {
+			type: String,
+		},
+		stackOverflow: {
+			type: String,
+		},
 		posts: [
 			{
 				type: Schema.Types.ObjectId,

@@ -6,6 +6,10 @@ type User {
     pic: String
     location: String
     bio: String
+    gitHub: String
+    linkedIn: String
+    instagram: String
+    stackOverflow: String
     posts: [Post]
     friendCount: Int
     friends: [Friend]
