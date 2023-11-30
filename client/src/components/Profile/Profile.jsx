@@ -4,17 +4,17 @@ import { QUERY_ME } from '../../utils/queries';
 // Placeholder pic until option is created for user to select other images or upload personal profile image
 import dragonFly from '../../assets/images/Dragonfly.png';
 import './style.css';
-// import { FaLinkedin, FaGithub, FaStackOverflow, FaInstagram } from 'react-icons/fa6';
+// import { FaLinkedin, FaGithub, FaInstagram, FaStackOverflow } from 'react-icons/fa6';
 
-function Profile({ name, bio, pic, url }) {
+function Profile () {
     // const [userName, setUserName] = useState('');
     const [userInfo, setUserInfo] = useState({
         userName: '',
         userBio: '', 
-        gitHub: '',
-        linkedIn: '',
-        instagram: '',
-        stackOverflow: '',
+        userGitHub: '',
+        userLinkedIn: '',
+        userInstagram: '',
+        userStackOverflow: '',
     });
 
     const { loading, data } = useQuery(QUERY_ME);
@@ -30,10 +30,10 @@ function Profile({ name, bio, pic, url }) {
                 userName: data.me.username,
                 // TODO: Build form to input Bio data and social media links/data
                 userBio: data.me.bio || 'I am a software engineer. Yay!', 
-                gitHub: '',
-                linkedIn: '',
-                instagram: '',
-                stackOverflow: '',
+                userGitHub: data.me.gitHub || '',
+                userLinkedIn: data.me.linkedIn || 'https://www.linkedin.com/in/brittany-brimley-390a81293/',
+                userInstagram: data.me.instagram || '',
+                userStackOverflow: data.me.stackOverflow || '',
             });
         }
     }, [data])
@@ -51,16 +51,16 @@ function Profile({ name, bio, pic, url }) {
             <div className='bio mb-5'>{userInfo.userBio}</div>
 
             {/* TODO: Add icons to social media links */}
-            <a href={ 'gitHub' } target='_blank'>
+            <a href={ userInfo.userGitHub } target='_blank'>
                 <h2>GitHub:</h2>
             </a>
-            <a href={ 'linkedIn' } target='_blank'>
+            <a href={ userInfo.userLinkedIn } target='_blank'>
                 <h2>LinkedIn:</h2>
             </a>
-            <a href={ 'instagram' } target='_blank'>
+            <a href={ userInfo.userInstagram } target='_blank'>
                 <h2>Instagram:</h2>
             </a>
-            <a href={ 'stackOverflow' } target='_blank'>
+            <a href={ userInfo.userStackOverflow } target='_blank'>
                 <h2>StackOverflow:</h2>
             </a>
         </div>

@@ -2,26 +2,46 @@
   {
     "username": "Darth Vader",
     "email": "vader@empire.com",
-    "password": "password01"
+    "password": "password01",
+    "gitHub": "https://github.com/darthvader",
+    "linkedIn": "https://www.linkedin.com/in/darthvader",
+    "instagram": "https://www.instagram.com/darthvader",
+    "stackOverflow": "https://stackoverflow.com/users/darthvader"
   },
   {
     "username": "Luke Skywalker",
     "email": "skywalker@waterfarm.org",
-    "password": "password02"
+    "password": "password02",
+    "gitHub": "https://github.com/lukeskywalker",
+    "linkedIn": "https://www.linkedin.com/in/lukeskywalker",
+    "instagram": "https://www.instagram.com/lukeskywalker",
+    "stackOverflow": "https://stackoverflow.com/users/lukeskywalker"
   },
   {
     "username": "Princess Leia",
     "email": "leia@alderan.gov",
-    "password": "password03"
+    "password": "password03",
+    "gitHub": "https://github.com/princessleia",
+    "linkedIn": "https://www.linkedin.com/in/princessleia",
+    "instagram": "https://www.instagram.com/princessleia",
+    "stackOverflow": "https://stackoverflow.com/users/princessleia"
   },
   {
     "username": "Ben Kenobi",
     "email": "notobiwan@notajedi.com",
-    "password": "password04"
+    "password": "password04",
+    "gitHub": "https://github.com/benkenobi",
+    "linkedIn": "https://www.linkedin.com/in/benkenobi",
+    "instagram": "https://www.instagram.com/benkenobi",
+    "stackOverflow": "https://stackoverflow.com/users/benkenobi"
   },
   {
     "username": "Han Solo",
     "email": "solo@smugglers.dev",
-    "password": "password05"
+    "password": "password05",
+    "gitHub": "https://github.com/hansolo",
+    "linkedIn": "https://www.linkedin.com/in/hansolo",
+    "instagram": "https://www.instagram.com/hansolo",
+    "stackOverflow": "https://stackoverflow.com/users/hansolo"
   }
 ]
