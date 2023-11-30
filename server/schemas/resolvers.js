@@ -62,6 +62,21 @@ const resolvers = {
 
 			return { token, user };
 		},
+		addPost: async (parent, { postText }, context) => {
+			if (context.user) {
+			const post = await Post.create({
+				postText,
+				postAuthor: context.user.username,
+			});
+
+			await User.findOneAndUpdate(
+				{ _id: context.user._id },
+				{ $addToSet: { posts: post._id } }
+			);
+			return post;
+			}
+			throw AuthenticationError;
+		},
 		savedPost: async (parent, { postText }, context) => {
 			if (context.user) {
 				const post = await Post.create({
@@ -82,6 +97,34 @@ const resolvers = {
 			// throw AuthenticationError;
 			// ('You need to be logged in!');
 		},
+		deletePost: async (parent, { postId }, context) => {
+			if (context.user) {
+				const post = await Post.findOneAndDelete({
+					_id: postId,
+					postAuthor: context.user.username,
+				});
+
+				await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { posts: post._id } }
+				);
+
+				return post;
+			}
+			throw AuthenticationError;
+		},
+		addComment: async (parent, { postId, commentText }) => {
+			return Post.findOneAndUpdate(
+			  { _id: postId },
+			  {
+				$addToSet: { comments: { commentText } },
+			  },
+			  {
+				new: true,
+				runValidators: true,
+			  }
+			);
+		  },
 		savedComment: async (
 			parent,
 			{ postId, commentText },
@@ -103,22 +146,6 @@ const resolvers = {
 						runValidators: true,
 					}
 				);
-			}
-			throw AuthenticationError;
-		},
-		deletePost: async (parent, { postId }, context) => {
-			if (context.user) {
-				const post = await Post.findOneAndDelete({
-					_id: postId,
-					postAuthor: context.user.username,
-				});
-
-				await User.findOneAndUpdate(
-					{ _id: context.user._id },
-					{ $pull: { posts: post._id } }
-				);
-
-				return post;
 			}
 			throw AuthenticationError;
 		},

@@ -29,8 +29,6 @@ type Comment {
     commentText: String!
     commentAuthor: String!
     createdAt: String
-
-
 }
 
 type Auth {
@@ -56,8 +54,10 @@ type Mutation {
     loginUser(email: String!, password: String!): Auth
     addFriend(username: String!, friendsId: ID): User
     deleteFriend(_id: ID!): User
+    addPost(postText: String!): User
     savedPost(postText: Postinput): User
     deletePost(_id: ID!): User
+    addComment(postId: ID!, commentText: String!): Post
     savedComment(_id: ID!): User
     deleteComment(_id: ID!): User
   }
