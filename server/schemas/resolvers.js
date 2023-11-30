@@ -16,10 +16,9 @@ const resolvers = {
 		user: async (parent, { username }) => {
 			console.log(username);
 			return User.findOne({ username })
-			// 	.populate('posts')
-			// 	.populate('friends')
-			
-			// .populate({ path: 'user', populate: 'friends' });
+				.populate('posts')
+				.populate('friends')
+			// changed back to populate friends and posts in gql
 		},
 		posts: async (parent, { username }) => {
 			const params = username ? { username } : {};
