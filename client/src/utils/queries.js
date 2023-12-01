@@ -114,6 +114,12 @@ export const QUERY_ME = gql`
 				postText
 				createdAt
 				postAuthor
+				comments {
+					_id
+					commentText
+					commentAuthor
+					createdAt
+        }
 			}
 			friends {
 				_id

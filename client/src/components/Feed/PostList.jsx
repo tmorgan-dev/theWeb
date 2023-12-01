@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import AuthService from '../../utils/auth';
@@ -17,7 +17,7 @@ const Posts = () => {
                 setUserInfo({
                     postText: data.me.posts.map(post => post.postText),
                     postAuthor: data.me.username,
-                });
+                }); console.log("Data1", data)
             }
         },
     });
@@ -25,16 +25,29 @@ const Posts = () => {
     if (!data || !data.me || !data.me.posts) return <p>No posts found</p>;
 
     const { posts } = data.me;
+    console.log("POST DATA", posts)
 
     return (
-        <div>
-            <h1>Your Posts</h1>
+        <div className="bg-purple-800 p-4 m-4 rounded-lg shadow-md text-white">
+            <h1 className="text-2xl font-bold mb-4">Your Posts</h1>
             <ul>
                 {posts.map((post) => (
-                    <li key={post._id}>
-                        <p>{post.postText}</p>
-                        <p>Author: {post.postAuthor}</p>
-                        <p>Created At: {post.createdAt}</p>
+                    <li key={post._id} className="mb-4 p-4 bg-purple-900 rounded-lg shadow-md">
+                        <p className="text-lg font-semibold mb-2">{post.postText}</p>
+                        <p className="text-white">Author: {post.postAuthor}</p>
+                        <p className="text-white">Created At: {post.createdAt}</p>
+
+                        {post.comments && post.comments.length > 0 && (
+                            <ul className="mt-4">
+                                {post.comments.map((comment) => (
+                                    <li key={comment._id} className="bg-purple-800 p-2 rounded-md shadow-sm mb-2">
+                                        <p className="text-md font-medium text-white">{comment.commentText}</p>
+                                        <p className="text-white">Comment Author: {comment.commentAuthor}</p>
+                                        <p className="text-white">Comment Created At: {comment.createdAt}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </li>
                 ))}
             </ul>
@@ -43,5 +56,6 @@ const Posts = () => {
 };
 
 export default Posts;
+
 
 
