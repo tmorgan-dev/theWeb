@@ -28,22 +28,22 @@ const Posts = () => {
     console.log("POST DATA", posts)
 
     return (
-        <div className="bg-purple-800 p-4 m-4 rounded-lg shadow-md text-white">
+        <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <h1 className="text-2xl font-bold mb-4">Your Posts</h1>
             <ul>
                 {posts.map((post) => (
-                    <li key={post._id} className="mb-4 p-4 bg-purple-900 rounded-lg shadow-md">
-                        <p className="text-lg font-semibold mb-2">{post.postText}</p>
+                    <li key={post._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
                         <p className="text-white">Author: {post.postAuthor}</p>
                         <p className="text-white">Created At: {post.createdAt}</p>
+                        <p className="text-lg font-semibold mb-2">{post.postText}</p>
 
                         {post.comments && post.comments.length > 0 && (
                             <ul className="mt-4">
                                 {post.comments.map((comment) => (
-                                    <li key={comment._id} className="bg-purple-800 p-2 rounded-md shadow-sm mb-2">
+                                    <li key={comment._id} className="postBg p-2 rounded-md shadow-sm mb-2">
                                         <p className="text-md font-medium text-white">{comment.commentText}</p>
-                                        <p className="text-white">Comment Author: {comment.commentAuthor}</p>
-                                        <p className="text-white">Comment Created At: {comment.createdAt}</p>
+                                        <p className="text-white">{comment.commentAuthor}</p>
+                                        <p className="text-white">Created At: {comment.createdAt}</p>
                                     </li>
                                 ))}
                             </ul>
@@ -51,6 +51,18 @@ const Posts = () => {
                     </li>
                 ))}
             </ul>
+            <style>
+    {`
+      /* Hide the scrollbar for WebKit browsers */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for Firefox */
+      scrollbar-width: none;
+      /* Hide scrollbar for IE/Edge */
+      -ms-overflow-style: none;
+    `}
+  </style>
         </div>
     );
 };

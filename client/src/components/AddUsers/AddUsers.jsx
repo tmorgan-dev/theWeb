@@ -25,11 +25,13 @@ const AddUser = () => {
     return (
 <div style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
   {users.map((user) => (
-    <div key={user._id} className="bg-purple-9000  overAllFont text-white flex justify-between items-center p-4">
-      <p>{user.username}</p>
+    <div key={user._id} className="text-white feed-userListBg">
+      <div className="postBg  flex justify-between items-center p-4">
+      <p className="text-2xl">{user.username}</p>
       <button onClick={() => handleAddFriend(user._id)} className="buttons text-white px-4 py-2 rounded">
         Add Friend
       </button>
+      </div>
     </div>
   ))}
   <style>
