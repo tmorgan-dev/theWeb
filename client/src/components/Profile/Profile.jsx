@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import { FaGithub, FaLinkedin, FaInstagram, FaStackOverflow } from 'react-icons/fa6';
+import { IoSettingsOutline } from "react-icons/io5";
 import dragonFly from '../../assets/images/Dragonfly.png';
+import Modal from '../Form/Form';
 import './style.css';
 
 function Profile () {
@@ -15,6 +17,7 @@ function Profile () {
         userInstagram: '',
         userStackOverflow: '',
     });
+    const [showModal, setShowModal] = useState(false);
 
     const { loading, data } = useQuery(QUERY_ME);
     useEffect(() => {
@@ -63,6 +66,7 @@ function Profile () {
                 {/* <img src={ pic } alt={ title } /> */}
                 <img src={ dragonFly } alt='dragonfly' className='object-fill'/>
             </div>
+            <button onClick={() => setShowModal(true)}><IoSettingsOutline /></button>
 
             <div className='profileName'>{userInfo.userName}</div>
 
@@ -115,6 +119,7 @@ function Profile () {
                     }}><FaStackOverflow />
                 </a>
             </div>
+            {showModal ? <Modal showModal={showModal} setShowModal={setShowModal}/>: null}
         </div>
     );
 }
