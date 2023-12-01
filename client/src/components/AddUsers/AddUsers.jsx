@@ -23,14 +23,32 @@ const AddUser = () => {
     };
 
     return (
-        <div>
-            {users.map(user => (
-                <div key={user._id}>
-                    <p>{user.username}</p>
-                    <button onClick={() => handleAddFriend(user._id)}>Add Friend</button>
-                </div>
-            ))}
-        </div>
+<div style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+  {users.map((user) => (
+    <div key={user._id} className="bg-purple-9000  overAllFont text-white flex justify-between items-center p-4">
+      <p>{user.username}</p>
+      <button onClick={() => handleAddFriend(user._id)} className="buttons text-white px-4 py-2 rounded">
+        Add Friend
+      </button>
+    </div>
+  ))}
+  <style>
+    {`
+      /* Hide the scrollbar for WebKit browsers */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for Firefox */
+      scrollbar-width: none;
+      /* Hide scrollbar for IE/Edge */
+      -ms-overflow-style: none;
+    `}
+  </style>
+</div>
+
+
+
+
     );
 }
 
