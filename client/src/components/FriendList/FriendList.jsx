@@ -15,7 +15,7 @@ const FriendsList = ({ username }) => {
 	const { friends } = data.me;
 
 	if (!friends.length) {
-		return <h4>No friends. Go make some :D</h4>;
+		return <h4>No friends. Go make some nerd :D</h4>;
 	}
 
 	return (
