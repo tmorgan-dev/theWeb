@@ -15,11 +15,11 @@ const FriendsList = ({ username }) => {
 	const { friends } = data.me;
 
 	if (!friends.length) {
-		return <h4>No friends. Go make some nerd :D</h4>;
+		return <h4 className="text-white postBg text-2xl">No friends. Go make some nerd :D</h4>;
 	}
 
 	return (
-		<ul className='list-none'>
+		<ul className='list-none text-white postBg text-2xl'>
 			{friends.map((friends) => (
 				<li key={friends._id}>{friends.username}</li>
 			))}
