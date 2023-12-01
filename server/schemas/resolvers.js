@@ -35,9 +35,16 @@ const resolvers = {
 		},
 		me: async (parent, args, context) => {
 			if (context.user) {
-				return User.findOne({ _id: context.user._id })
-					.populate('posts')
+				const user = await User.findOne({ _id: context.user._id })
+					.populate({
+						path: 'posts',
+						populate: {
+							path: 'comments',
+						},
+					})
 					.populate('friends');
+
+				return user;
 			}
 			throw AuthenticationError;
 		},
