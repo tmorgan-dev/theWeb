@@ -3,11 +3,11 @@ import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 
 const FriendsList = ({ username }) => {
-	console.log({ username });
+	// console.log({ username });
 	const { loading, error, data } = useQuery(QUERY_ME, {
 		variables: { _id: username },
 	});
-	console.log(data);
+	// console.log(data);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;

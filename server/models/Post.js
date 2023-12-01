@@ -15,6 +15,7 @@ function dateFormat(timestamp) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+
 const postSchema = new Schema(
     {
         postText: {
@@ -29,7 +30,8 @@ const postSchema = new Schema(
             get: timestamp => dateFormat(timestamp)
         },
         postAuthor: {
-            type: String,
+            type: Schema.Types.ObjectId,  // Change type to ObjectId
+            ref: 'User',  // Reference the User model
             required: true,
         },
         comments: [commentSchema],
@@ -45,7 +47,38 @@ const postSchema = new Schema(
 const Post = model('Post', postSchema);
 module.exports = Post;
 
-// START OF ORIGINAL CODE
+// START OF UPDATED SCHEMA
+// const postSchema = new Schema(
+//     {
+//         postText: {
+//             type: String,
+//             required: true,
+//             minLength: 1,
+//             maxLength: 280,
+//         },
+//         createdAt: {
+//             type: Date,
+//             default: Date.now,
+//             get: timestamp => dateFormat(timestamp)
+//         },
+//         postAuthor: {
+//             type: String,
+//             required: true,
+//         },
+//         comments: [commentSchema],
+//     },
+//     {
+//         toJSON: {
+//             getters: true,
+//         },
+//         id: false,
+//     }
+// );
+
+// const Post = model('Post', postSchema);
+// module.exports = Post;
+
+// START OF ORIGINAL CODE 1
 // const { Schema } = require('mongoose');
 // const commentSchema = require('./Comment')
 
