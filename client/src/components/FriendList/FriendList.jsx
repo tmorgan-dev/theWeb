@@ -6,6 +6,11 @@ const FriendsList = ({ username }) => {
 	// console.log({ username });
 	const { loading, error, data } = useQuery(QUERY_ME, {
 		variables: { _id: username },
+		refetchQueries: () => [
+			{
+				query: QUERY_ME
+			}
+		]
 	});
 	// console.log(data);
 

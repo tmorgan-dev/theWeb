@@ -45,6 +45,11 @@ type Friend {
     username: String
 }
 
+type Friends {
+    friendsId: ID
+    username: String
+
+}
 type Query {
     me: User
     user(username: String!): User
@@ -58,7 +63,7 @@ type Query {
 type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     loginUser(email: String!, password: String!): Auth
-    addFriend(username: String!, friendsId: ID): User
+    addFriend(username: String, friendsId: ID): Friends
     deleteFriend(_id: ID!): User
     addPost(postText: String!, postAuthor: String!): User
     savedPost(postText: Postinput): User

@@ -10,14 +10,13 @@ const resolvers = {
 			return User.find().populate('posts');
 		},
 		friends: async (parent, { _id, username }) => {
-
-			return User.find({ _id, username })
+			return User.find({ _id, username });
 		},
 		user: async (parent, { username }) => {
 			console.log(username);
 			return User.findOne({ username })
 				.populate('posts')
-				.populate('friends')
+				.populate('friends');
 			// changed back to populate friends and posts in gql
 		},
 		// posts: async (parent, { username }) => {
@@ -26,7 +25,9 @@ const resolvers = {
 		// },
 		posts: async (parent, { username }) => {
 			const params = username ? { postAuthor: username } : {};
-			const posts = await Post.find(params).sort({ createdAt: -1 });
+			const posts = await Post.find(params).sort({
+				createdAt: -1,
+			});
 			return posts;
 		},
 
@@ -35,7 +36,9 @@ const resolvers = {
 		},
 		me: async (parent, args, context) => {
 			if (context.user) {
-				const user = await User.findOne({ _id: context.user._id })
+				const user = await User.findOne({
+					_id: context.user._id,
+				})
 					.populate({
 						path: 'posts',
 						populate: {
@@ -81,13 +84,17 @@ const resolvers = {
 
 			return { token, user };
 		},
-		addPost: async (parent, { postText, postAuthor }, context) => {
-			console.log('hit', postText)
+		addPost: async (
+			parent,
+			{ postText, postAuthor },
+			context
+		) => {
+			console.log('hit', postText);
 			if (context.user) {
 				const post = await Post.create({
 					postText,
 					// postAuthor: context.user.username,
-					postAuthor
+					postAuthor,
 				});
 
 				await User.findOneAndUpdate(
@@ -210,7 +217,23 @@ const resolvers = {
 					},
 					{ new: true }
 				);
-				return updatedUser;
+				const updatedFriend = await User.findOneAndUpdate(
+					{ _id: friendsId },
+					{
+						$push: {
+							friends: {
+								_id: context.user._id,
+								friendUsername: context.user.username,
+							},
+						},
+					},
+					{ new: true }
+				);
+
+				return {
+					currentUser: updatedUser,
+					friend: updatedFriend,
+				};
 			}
 			throw AuthenticationError;
 		},

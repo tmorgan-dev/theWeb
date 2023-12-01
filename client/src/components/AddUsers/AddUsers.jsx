@@ -4,7 +4,8 @@ import { ALL_USERS } from '../../utils/queries';
 import { ADD_FRIEND } from '../../utils/mutation';
 
 const AddUser = () => {
-    const { loading, error, data } = useQuery(ALL_USERS);
+  const { loading, error, data } = useQuery(ALL_USERS);
+  
 
     const [addFriend] = useMutation(ADD_FRIEND);
 
@@ -13,29 +14,57 @@ const AddUser = () => {
 
     const users = data.users;
 
-    const handleAddFriend = (userId) => {
+    const handleAddFriend = async (userId, username) => {
+				
+      try {
+
         addFriend({
-            variables: {
-                username: username,
-                friendsId: userId
+          variables: {
+            username: username,
+            friendsId: userId,
+          },
+          refetchQueries: () => [
+            {
+           
+              query:  ALL_USERS
+
             }
+          ]
         });
-    };
+        
+      } catch (err) {
+        console.error(err)
+      }
+    }
 
     return (
-<div style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-  {users.map((user) => (
-    <div key={user._id} className="text-white feed-userListBg">
-      <div className="postBg  flex justify-between items-center p-4">
-      <p className="text-2xl">{user.username}</p>
-      <button onClick={() => handleAddFriend(user._id)} className="buttons text-white px-4 py-2 rounded">
-        Add Friend
-      </button>
-      </div>
-    </div>
-  ))}
-  <style>
-    {`
+					<div
+						style={{
+							overflowY: 'auto',
+							scrollbarWidth: 'none',
+							msOverflowStyle: 'none',
+						}}
+					>
+						{users.map((user) => (
+							<div
+								key={user._id}
+								className='text-white feed-userListBg'
+							>
+								<div className='postBg  flex justify-between items-center p-4'>
+									<p className='text-2xl'>{user.username}</p>
+									<button
+										onClick={() =>
+											handleAddFriend(user._id, user.username)
+										}
+										className='buttons text-white px-4 py-2 rounded'
+									>
+										Add Friend
+									</button>
+								</div>
+							</div>
+						))}
+						<style>
+							{`
       /* Hide the scrollbar for WebKit browsers */
       ::-webkit-scrollbar {
         display: none;
@@ -45,13 +74,9 @@ const AddUser = () => {
       /* Hide scrollbar for IE/Edge */
       -ms-overflow-style: none;
     `}
-  </style>
-</div>
-
-
-
-
-    );
+						</style>
+					</div>
+				);
 }
 
 export default AddUser;
