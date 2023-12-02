@@ -50,21 +50,26 @@ type Friends {
     username: String
 
 }
+type FriendUser {
+    currentUser: User
+    friend: User
+}
 type Query {
     me: User
     user(username: String!): User
-    posts(username: String): [Post]
+    posts(username: String): Post
     post(postId: ID!): Post
     users: [User]
-    friends( _id: ID!, username: String!): [Friend]
+    friend( _id: ID!, username: String!): Friend
+    friends(friendsId: ID!, username: String): Friends
     
 }
 
 type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     loginUser(email: String!, password: String!): Auth
-    addFriend(username: String, friendsId: ID): Friends
-    deleteFriend(_id: ID!): User
+    addFriend(username: String, friendsId: ID): FriendUser
+    deleteFriend(friendsId: ID!): FriendUser
     addPost(postText: String!): User
     savedPost(postText: Postinput): User
     deletePost(_id: ID!): User
