@@ -98,7 +98,9 @@ const resolvers = {
 				);
 
 				// Return the user associated with the post
-				const user = await User.findOne({ _id: context.user._id })
+				const user = await User.findOne({
+					_id: context.user._id,
+				})
 					.populate('posts')
 					.populate('friends');
 
@@ -109,9 +111,10 @@ const resolvers = {
 					throw new Error('User does not have a username.');
 				}
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw new AuthenticationError(
+				'You need to be logged in!'
+			);
 		},
-
 
 		savedPost: async (parent, { postText }, context) => {
 			if (context.user) {
@@ -239,6 +242,28 @@ const resolvers = {
 
 				return {
 					currentUser: updatedUser,
+					friend: updatedFriend,
+				};
+			}
+			throw AuthenticationError;
+		},
+
+		deleteFriend: async (parent, { friendsId }, context) => {
+			if (context.user) {
+				const removeFriend = await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { friends:  friendsId  } },
+					{ new: true }
+				);
+
+				const updatedFriend = await User.findOneAndUpdate(
+					{ _id:  friendsId },
+					{ $pull: { friends:   context.user._id  } },
+					{ new: true }
+				);
+console.log(removeFriend)
+				return {
+					currentUser: removeFriend,
 					friend: updatedFriend,
 				};
 			}

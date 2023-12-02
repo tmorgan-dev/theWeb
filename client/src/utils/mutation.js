@@ -66,8 +66,28 @@ export const ADD_COMMENT = gql`
 export const ADD_FRIEND = gql`
 	mutation addFriend($username: String!, $friendsId: ID) {
 		addFriend(username: $username, friendsId: $friendsId) {
-			friendsId
+		currentUser{
+			_id
 			username
+		}
+		friend {
+			_id
+			username
+		}
+		}
+	}
+`;
+export const DELETE_FRIEND = gql`
+	mutation deleteFriend($friendsId: ID!) {
+		deleteFriend(friendsId: $friendsId) {
+				currentUser{
+			_id
+			username
+		}
+		friend {
+			_id
+			username
+		}
 		}
 	}
 `;
