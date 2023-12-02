@@ -84,17 +84,11 @@ const resolvers = {
 
 			return { token, user };
 		},
-		addPost: async (
-			parent,
-			{ postText, postAuthor },
-			context
-		) => {
-			console.log('hit', postText);
+		addPost: async (parent, { postText }, context) => {
 			if (context.user) {
 				const post = await Post.create({
 					postText,
-					// postAuthor: context.user.username,
-					postAuthor,
+					postAuthor: context.user._id,
 				});
 
 				await User.findOneAndUpdate(
@@ -102,10 +96,23 @@ const resolvers = {
 					{ $push: { posts: post._id } },
 					{ new: true }
 				);
-				return post;
+
+				// Return the user associated with the post
+				const user = await User.findOne({ _id: context.user._id })
+					.populate('posts')
+					.populate('friends');
+
+				// Check if the user object has a username before returning
+				if (user && user.username) {
+					return user;
+				} else {
+					throw new Error('User does not have a username.');
+				}
 			}
-			throw AuthenticationError;
+			throw new AuthenticationError('You need to be logged in!');
 		},
+
+
 		savedPost: async (parent, { postText }, context) => {
 			if (context.user) {
 				const post = await Post.create({

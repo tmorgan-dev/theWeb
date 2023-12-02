@@ -30,7 +30,7 @@ const postSchema = new Schema(
             get: timestamp => dateFormat(timestamp)
         },
         postAuthor: {
-            type: String,  // Change type to ObjectId
+            type: Schema.Types.ObjectId,  // Change type to ObjectId
             ref: 'User',  // Reference the User model
             required: true,
         },

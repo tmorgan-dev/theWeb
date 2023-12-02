@@ -65,7 +65,7 @@ type Mutation {
     loginUser(email: String!, password: String!): Auth
     addFriend(username: String, friendsId: ID): Friends
     deleteFriend(_id: ID!): User
-    addPost(postText: String!, postAuthor: String!): User
+    addPost(postText: String!): User
     savedPost(postText: Postinput): User
     deletePost(_id: ID!): User
     addComment(postId: ID!, commentText: String!): Post

@@ -4,20 +4,23 @@ import { QUERY_ME } from '../../utils/queries';
 import AuthService from '../../utils/auth';
 
 const Posts = () => {
-    const [userInfo, setUserInfo] = useState({
-        postText: '',
-        postAuthor: '',
-    });
+    // Retrieve user information from AuthService
     const user = AuthService.getProfile();
     const authToken = AuthService.getToken();
-    const postAuthor = user.username;
+
+    const [userInfo, setUserInfo] = useState({
+        postText: '',
+        postAuthor: user ? user.username : '', // Use AuthService to get the username
+    });
+
+    // Fetch the currently logged-in user
     const { data } = useQuery(QUERY_ME, {
         onCompleted: (data) => {
             if (data && data.me) {
                 setUserInfo({
-                    postText: data.me.posts.map(post => post.postText),
+                    posts: data.me.posts,
                     postAuthor: data.me.username,
-                }); console.log("Data1", data)
+                });
             }
         },
     });
@@ -25,7 +28,6 @@ const Posts = () => {
     if (!data || !data.me || !data.me.posts) return <p>No posts found</p>;
 
     const { posts } = data.me;
-    console.log("POST DATA", posts)
 
     return (
         <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -52,22 +54,19 @@ const Posts = () => {
                 ))}
             </ul>
             <style>
-    {`
-      /* Hide the scrollbar for WebKit browsers */
-      ::-webkit-scrollbar {
-        display: none;
-      }
-      /* Hide scrollbar for Firefox */
-      scrollbar-width: none;
-      /* Hide scrollbar for IE/Edge */
-      -ms-overflow-style: none;
-    `}
-  </style>
+                {`
+          /* Hide the scrollbar for WebKit browsers */
+          ::-webkit-scrollbar {
+            display: none;
+          }
+          /* Hide scrollbar for Firefox */
+          scrollbar-width: none;
+          /* Hide scrollbar for IE/Edge */
+          -ms-overflow-style: none;
+        `}
+            </style>
         </div>
     );
 };
 
 export default Posts;
-
-
-
