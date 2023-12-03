@@ -51,19 +51,35 @@ const FriendsList = ({  username }) => {
 	};
 
 	return (
-		<ul className='list-none text-white postBg text-2xl'>
+		<div
+		style={{
+			overflowY: 'auto',
+			scrollbarWidth: 'none',
+			msOverflowStyle: 'none',
+		}}>
 			{friends.map((friend) => (
-				<li key={friend._id}>
-					{friend.username}{' '}
-					<button
-						id={friend._id}
-						onClick={(e) => handleDeleteFriend(e.target.getAttribute('id') )}
-					>
-						Remove Friend
-					</button>
-				</li>
+				<div key={friend._id} className='text-white feed-userListBg'>
+					<div className='postBg  flex justify-between items-center p-4'>
+						<p className="text-2xl">{friend.username}{' '}</p>
+							<button className='buttons text-white px-4 py-2 rounded' id={friend._id} onClick={(e) => handleDeleteFriend(e.target.getAttribute('id') )}>
+							Remove Friend
+							</button>
+					</div>
+				</div>
 			))}
-		</ul>
+			<style>
+				{`
+      /* Hide the scrollbar for WebKit browsers */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for Firefox */
+      scrollbar-width: none;
+      /* Hide scrollbar for IE/Edge */
+      -ms-overflow-style: none;
+    `}
+			</style>
+		</div>
 	);
 };
 export default FriendsList;

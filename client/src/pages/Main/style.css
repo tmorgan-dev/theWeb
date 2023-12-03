@@ -21,3 +21,11 @@
 .overallFont {
     font-family: 'Dosis', sans-serif;
 }
+
+.userPostName {
+    font-size: 30px;
+}
+
+.userCommentName {
+    font-size:20px
+}

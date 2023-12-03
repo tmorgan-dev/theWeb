@@ -5,16 +5,15 @@ const commentSchema = require('./Comment');
 function dateFormat(timestamp) {
     const date = new Date(timestamp);
 
-    const year = date.getFullYear();
+    const year = date.getFullYear().toString().slice(-2); // Get the last two digits of the year
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
+    const hours = date.getHours() % 12 || 12; // Convert 0 to 12 for a.m./p.m. format
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const amOrPm = date.getHours() >= 12 ? 'p.m.' : 'a.m.';
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}${amOrPm} ${month}/${day}/${year}`;
 }
-
 
 const postSchema = new Schema(
     {

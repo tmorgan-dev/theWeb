@@ -32,45 +32,48 @@ const Posts = () => {
 
     return (
         <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <h1 className="text-2xl font-bold mb-4">Your Posts</h1>
-            <ul>
+            <h1 className=" font-bold mb-4">Your Posts</h1>
+<ul>
                 {posts.map((post) => (
                     <li key={post._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
-                        <p className="text-white">Author: {data.me.username}</p>
-                        <p className="text-white">Created At: {post.createdAt}</p>
-                        <p className="text-lg font-semibold mb-2">{post.postText}</p>
+<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <p className="text-white userPostName">{data.me.username}</p>
+    <p className="text-white">{post.createdAt}</p>
+</div>
 
-                        {/* Add Comment component */}
-                        <AddComment postId={post._id} />
+                        <p className="text-2xl font-semibold mb-2">{post.postText}</p>
 
-                        {post.comments && post.comments.length > 0 && (
-                            <ul className="mt-4">
-                                {post.comments.map((comment) => (
-                                    <li key={comment._id} className="postBg p-2 rounded-md shadow-sm mb-2">
-                                        <p className="text-md font-medium text-white">{comment.commentText}</p>
-                                        <p className="text-white">{comment.commentAuthor}</p>
-                                        <p className="text-white">Created At: {comment.createdAt}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                ))}
-            </ul>
-            <style>
-                {`
-          /* Hide the scrollbar for WebKit browsers */
-          ::-webkit-scrollbar {
-            display: none;
-          }
-          /* Hide scrollbar for Firefox */
-          scrollbar-width: none;
-          /* Hide scrollbar for IE/Edge */
-          -ms-overflow-style: none;
-        `}
-            </style>
-        </div>
-    );
+    {post.comments && post.comments.length > 0 && (
+        <ul className="mt-4">
+            {post.comments.map((comment) => (
+                <li key={comment._id} className="postBg p-2 rounded-md shadow-sm mb-2">
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <p className="text-white userCommentName">{comment.commentAuthor}</p>
+                        <p className="text-white">{comment.createdAt}</p>
+                    </div>
+                        <p className="text-md font-medium text-white">{comment.commentText}</p>
+                </li>
+            ))}
+            <AddComment postId={post._id} />
+        </ul>
+        )}
+    </li>
+    ))}
+</ul>
+<style>
+    {`
+    /* Hide the scrollbar for WebKit browsers */
+    ::-webkit-scrollbar {
+    display: none;
+    }
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none;
+    /* Hide scrollbar for IE/Edge */
+    -ms-overflow-style: none;
+    `}
+</style>
+</div>
+);
 };
 
 export default Posts;
