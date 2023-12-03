@@ -70,7 +70,7 @@ type Mutation {
     loginUser(email: String!, password: String!): Auth
     addFriend(username: String, friendsId: ID): FriendUser
     deleteFriend(friendsId: ID!): FriendUser
-    addPost(postText: String!): User
+    addPost(postText: String!, postAuthor: String!): Post
     savedPost(postText: Postinput): User
     deletePost(_id: ID!): User
     addComment(postId: ID!, commentText: String!): Post
