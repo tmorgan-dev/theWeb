@@ -21,24 +21,28 @@ function Profile () {
 
     const { loading, data } = useQuery(QUERY_ME);
     useEffect(() => {
-        // Use API call for userdata, delete placeholders in quotations when ready to upload user profile
-        // placeholder until API call for Profile name is made
-        console.log(data)
+					// Use API call for userdata, delete placeholders in quotations when ready to upload user profile
+					// placeholder until API call for Profile name is made
+					if (loading) {
+						return;
+					}
+					console.log(data); // added loading since the data wasn't coming through the useeffect func for some reason
 
-        // setUserName('');
-        // placeholder until API call for Bio is made
-        if (data) {
-            setUserInfo({
-                userName: data.me.username,
-                // TODO: Build form to input Bio data and social media links/data
-                userBio: data.me.bio || 'I am a software engineer. Yay!', 
-                userGitHub: data.me.gitHub || '',
-                userLinkedIn: data.me.linkedIn || '',
-                userInstagram: data.me.instagram || '',
-                userStackOverflow: data.me.stackOverflow || '',
-            });
-        }
-    }, [data])
+					// setUserName('');
+					// placeholder until API call for Bio is made
+					if (data) {
+						setUserInfo({
+							userName: data.me.username,
+							// TODO: Build form to input Bio data and social media links/data
+							userBio:
+								data.me.bio || 'I am a software engineer. Yay!',
+							userGitHub: data.me.gitHub || '',
+							userLinkedIn: data.me.linkedIn || '',
+							userInstagram: data.me.instagram || '',
+							userStackOverflow: data.me.stackOverflow || '',
+						});
+					}
+				}, [data])
 
     const [gitIcon, pickGitIcon] = useState(false);
     const [linkIcon, pickLinkIcon] = useState(false);
