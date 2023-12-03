@@ -21,21 +21,17 @@ function Profile () {
 
     const { loading, data } = useQuery(QUERY_ME);
     useEffect(() => {
-					// Use API call for userdata, delete placeholders in quotations when ready to upload user profile
-					// placeholder until API call for Profile name is made
+					// API call for userdata
 					if (loading) {
 						return;
 					}
-					console.log(data); // added loading since the data wasn't coming through the useeffect func for some reason
+					console.log(data);
 
-					// setUserName('');
-					// placeholder until API call for Bio is made
 					if (data) {
 						setUserInfo({
 							userName: data.me.username,
-							// TODO: Build form to input Bio data and social media links/data
-							userBio:
-								data.me.bio || 'I am a software engineer. Yay!',
+							// Form to input/edit Profile pic, Bio data and social media links/data will from from Form.jsx component 
+							userBio: data.me.bio || 'I am a software engineer. Yay!',
 							userGitHub: data.me.gitHub || '',
 							userLinkedIn: data.me.linkedIn || '',
 							userInstagram: data.me.instagram || '',
@@ -65,18 +61,18 @@ function Profile () {
     };
 
     return (
-        <div className='profile'>
-            <div className='profilePic rounded-full mx-auto border-2 mb-4'>
-                {/* <img src={ pic } alt={ title } /> */}
+        <div className='profile relative'>
+            <div className='profilePic rounded-full mx-auto border-2 mb-4 relative'>
                 <img src={ dragonFly } alt='dragonfly' className='object-fill'/>
+                <div className='settingsIcon absolute bottom-0 right-3 mb-2 mr-2' style={{ zIndex: 1, margin: '-3px 10px -8px'}}>
+                    <button onClick ={() => setShowModal(true)} style={{ zIndex: 1 }}><IoSettingsOutline /></button>
+                </div>
             </div>
-            <button onClick={() => setShowModal(true)}><IoSettingsOutline /></button>
+            <div className='flex flex-col items-center text-center'>
+                <div className='profileName mt-5'>{userInfo.userName}</div>
+                <div className='bio mb-5'>{userInfo.userBio}</div>
+            </div>
 
-            <div className='profileName'>{userInfo.userName}</div>
-
-            <div className='bio mb-5'>{userInfo.userBio}</div>
-
-            {/* TODO: Add icons to social media links */}
             <div className='container flex justify-center'>
                 <a className='btn p-1 m-1 rounded-full inline-block' 
                     href={ userInfo.userGitHub } 
