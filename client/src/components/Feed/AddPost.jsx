@@ -59,7 +59,6 @@ const AddPost = () => {
     const  data  = await addPostMutation({
           variables: {
             postText,
-            postAuthor,
           },
           
         });
