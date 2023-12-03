@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import AuthService from '../../utils/auth';
+import AddComment from './AddComment';
 
 const Posts = () => {
     // Retrieve user information from AuthService
     const user = AuthService.getProfile();
     const authToken = AuthService.getToken();
-
+    console.log(authToken)
     const [userInfo, setUserInfo] = useState({
         postText: '',
         postAuthor: user ? user.username : '', // Use AuthService to get the username
@@ -38,6 +39,9 @@ const Posts = () => {
                         <p className="text-white">Author: {data.me.username}</p>
                         <p className="text-white">Created At: {post.createdAt}</p>
                         <p className="text-lg font-semibold mb-2">{post.postText}</p>
+
+                        {/* Add Comment component */}
+                        <AddComment postId={post._id} />
 
                         {post.comments && post.comments.length > 0 && (
                             <ul className="mt-4">
