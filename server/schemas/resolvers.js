@@ -98,22 +98,22 @@ const resolvers = {
 				);
 
 				// Return the user associated with the post
-				const user = await User.findOne({
-					_id: context.user._id,
-				})
-					.populate('posts')
-					.populate('friends');
+			// 	const user = await User.findOne({
+			// 		_id: context.user._id,
+			// 	})
+			// 		.populate('posts')
+			// 		.populate('friends');
 
-				// Check if the user object has a username before returning
-				if (user && user.username) {
-					return user;
-				} else {
-					throw new Error('User does not have a username.');
-				}
+			// 	// Check if the user object has a username before returning
+			// 	if (user && user.username) {
+			// 		return user;
+			// 	} else {
+			// 		throw new Error('User does not have a username.');
+			// 	}
 			}
-			throw new AuthenticationError(
-				'You need to be logged in!'
-			);
+			// throw new AuthenticationError(
+			// 	'You need to be logged in!'
+			// );
 		},
 
 		savedPost: async (parent, { postText }, context) => {
