@@ -35,7 +35,7 @@ const Posts = () => {
             <ul>
                 {posts.map((post) => (
                     <li key={post._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
-                        <p className="text-white">Author: {post.postAuthor}</p>
+                        <p className="text-white">Author: {data.me.username}</p>
                         <p className="text-white">Created At: {post.createdAt}</p>
                         <p className="text-lg font-semibold mb-2">{post.postText}</p>
 

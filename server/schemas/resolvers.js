@@ -88,7 +88,6 @@ const resolvers = {
 			if (context.user) {
 				const post = await Post.create({
 					postText,
-					postAuthor: context.user._id,
 				});
 
 				await User.findOneAndUpdate(
@@ -120,7 +119,6 @@ const resolvers = {
 			if (context.user) {
 				const post = await Post.create({
 					postText,
-					postAuthor: context.user.username,
 				});
 
 				const thisPost = await Post.findOne({

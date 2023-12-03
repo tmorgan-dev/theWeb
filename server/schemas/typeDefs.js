@@ -21,7 +21,7 @@ type Post {
     _id: ID!
     postText: String
     createdAt: String
-    postAuthor: String!
+    postAuthor: String
     comments: [Comment]
 }
 
@@ -70,7 +70,7 @@ type Mutation {
     loginUser(email: String!, password: String!): Auth
     addFriend(username: String, friendsId: ID): FriendUser
     deleteFriend(friendsId: ID!): FriendUser
-    addPost(postText: String!, postAuthor: String!): Post
+    addPost(postText: String!): Post
     savedPost(postText: Postinput): User
     deletePost(_id: ID!): User
     addComment(postId: ID!, commentText: String!): Post

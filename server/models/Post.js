@@ -32,7 +32,7 @@ const postSchema = new Schema(
         postAuthor: {
             type: Schema.Types.ObjectId,  // Change type to ObjectId
             ref: 'User',  // Reference the User model
-            required: true,
+            allowNull: true
         },
         comments: [commentSchema],
     },

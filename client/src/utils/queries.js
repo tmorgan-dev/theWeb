@@ -69,8 +69,8 @@ export const ALL_USERS = gql`
 // 	}
 // `;
 export const QUERY_POSTS = gql`
-  query getPosts($postAuthor: String!) {
-    posts(postAuthor: $postAuthor) {
+  query getPosts($postText: String!) {
+    posts(postText: $postText) {
       _id
       postText
       postAuthor
