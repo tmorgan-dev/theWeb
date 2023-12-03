@@ -31,12 +31,12 @@ const AddComment = ({ postId }) => {
         value={commentInput}
         onChange={handleCommentInputChange}
         placeholder="Add a comment..."
-        className="border-b-2 border-white p-1 mr-2 bg-transparent text-white focus:outline-none"
+        className="postBg p-1 mr-2 bg-transparent text-white rounded-md focus:outline-none"
       />
       <button
         onClick={handleAddComment}
         disabled={commentLoading}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none"
+        className="buttons hover:bg-purple-400 text-white font-bold py-1 px-2 rounded focus:outline-none"
       >
         {commentLoading ? 'Adding...' : 'Add Comment'}
       </button>
