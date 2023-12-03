@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import AuthService from '../../utils/auth';
 import AddComment from './AddComment';
 
 const Posts = () => {
-    // Retrieve user information from AuthService
     const user = AuthService.getProfile();
     const authToken = AuthService.getToken();
-    console.log(authToken)
     const [userInfo, setUserInfo] = useState({
         postText: '',
-        postAuthor: user ? user.username : '', // Use AuthService to get the username
+        postAuthor: user ? user.username : '',
     });
 
-    // Fetch the currently logged-in user
-    const { data } = useQuery(QUERY_ME, {
-        onCompleted: (data) => {
-            if (data && data.me) {
-                setUserInfo({
-                    posts: data.me.posts,
-                    postAuthor: data.me.username,
-                });
-            }
-        },
-    });
+    const { data } = useQuery(QUERY_ME);
+    const [toggleComments, setToggleComments] = useState({});
+
+    useEffect(() => {
+        if (data && data.me) {
+            setUserInfo({
+                posts: data.me.posts,
+                postAuthor: data.me.username,
+            });
+        }
+    }, [data]);
+
+    const handleToggleComments = (postId) => {
+        setToggleComments(prevState => ({
+            ...prevState,
+            [postId]: !prevState[postId]
+        }));
+    };
 
     if (!data || !data.me || !data.me.posts) return <p>No posts found</p>;
 
@@ -32,48 +37,49 @@ const Posts = () => {
 
     return (
         <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <h1 className=" font-bold mb-4">Your Posts</h1>
-<ul>
+            <h1 className="font-bold mb-4">Your Posts</h1>
+            <ul>
                 {posts.map((post) => (
                     <li key={post._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
-<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-    <p className="text-white userPostName">{data.me.username}</p>
-    <p className="text-white">{post.createdAt}</p>
-</div>
-
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <p className="text-white userPostName">{data.me.username}</p>
+                            <p className="text-white">{post.createdAt}</p>
+                        </div>
                         <p className="text-2xl font-semibold mb-2">{post.postText}</p>
-
-    {post.comments && post.comments.length > 0 && (
-        <ul className="mt-4">
-            {post.comments.map((comment) => (
-                <li key={comment._id} className="postBg p-2 rounded-md shadow-sm mb-2">
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <p className="text-white userCommentName">{comment.commentAuthor}</p>
-                        <p className="text-white">{comment.createdAt}</p>
-                    </div>
-                        <p className="text-md font-medium text-white">{comment.commentText}</p>
-                </li>
-            ))}
-            <AddComment postId={post._id} />
-        </ul>
-        )}
-    </li>
-    ))}
-</ul>
-<style>
-    {`
-    /* Hide the scrollbar for WebKit browsers */
-    ::-webkit-scrollbar {
-    display: none;
-    }
-    /* Hide scrollbar for Firefox */
-    scrollbar-width: none;
-    /* Hide scrollbar for IE/Edge */
-    -ms-overflow-style: none;
-    `}
-</style>
-</div>
-);
+                        <button className="mt-2 buttons hover:bg-purple-400 text-white font-bold text-sm py-1 px-2 rounded" onClick={() => handleToggleComments(post._id)}>
+                            {toggleComments[post._id] ? 'Nevermind' : 'View Comments'}
+                        </button>
+                        {toggleComments[post._id] && post.comments && post.comments.length > 0 && (
+                            <ul className="mt-4">
+                                {post.comments.map((comment) => (
+                                    <li key={comment._id} className="postBg p-2 rounded-md shadow-sm mb-2">
+                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <p className="text-white userCommentName">{comment.commentAuthor}</p>
+                                            <p className="text-white">{comment.createdAt}</p>
+                                        </div>
+                                        <p className="text-md font-medium text-white">{comment.commentText}</p>
+                                    </li>
+                                ))}
+                                <AddComment postId={post._id} />
+                            </ul>
+                        )}
+                    </li>
+                ))}
+            </ul>
+            <style>
+                {`
+                    /* Hide the scrollbar for WebKit browsers */
+                    ::-webkit-scrollbar {
+                        display: none;
+                    }
+                    /* Hide scrollbar for Firefox */
+                    scrollbar-width: none;
+                    /* Hide scrollbar for IE/Edge */
+                    -ms-overflow-style: none;
+                `}
+            </style>
+        </div>
+    );
 };
 
 export default Posts;
