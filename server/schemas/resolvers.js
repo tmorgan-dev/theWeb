@@ -97,18 +97,18 @@ const resolvers = {
 				);
 
 				// Return the user associated with the post
-			// 	const user = await User.findOne({
-			// 		_id: context.user._id,
-			// 	})
-			// 		.populate('posts')
-			// 		.populate('friends');
+				// 	const user = await User.findOne({
+				// 		_id: context.user._id,
+				// 	})
+				// 		.populate('posts')
+				// 		.populate('friends');
 
-			// 	// Check if the user object has a username before returning
-			// 	if (user && user.username) {
-			// 		return user;
-			// 	} else {
-			// 		throw new Error('User does not have a username.');
-			// 	}
+				// 	// Check if the user object has a username before returning
+				// 	if (user && user.username) {
+				// 		return user;
+				// 	} else {
+				// 		throw new Error('User does not have a username.');
+				// 	}
 			}
 			// throw new AuthenticationError(
 			// 	'You need to be logged in!'
@@ -150,17 +150,41 @@ const resolvers = {
 			}
 			throw AuthenticationError;
 		},
-		addComment: async (parent, { postId, commentText }) => {
-			return Post.findOneAndUpdate(
-				{ _id: postId },
-				{
-					$addToSet: { comments: { commentText } },
-				},
-				{
-					new: true,
-					runValidators: true,
-				}
-			);
+		// addComment: async (parent, { postId, commentText }) => {
+		// 	return Post.findOneAndUpdate(
+		// 		{ _id: postId },
+		// 		{
+		// 			$addToSet: { comments: { commentText } },
+		// 		},
+		// 		{
+		// 			new: true,
+		// 			runValidators: true,
+		// 		}
+		// 	);
+		// },
+		addComment: async (parent, { postId, commentText }, context) => {
+			if (context.user) {
+				const updatedPost = await Post.findOneAndUpdate(
+					{ _id: postId },
+					{
+						$addToSet: {
+							comments: {
+								commentText,
+								commentAuthor: context.user.username,
+							},
+						},
+					},
+					{
+						new: true,
+						runValidators: true,
+					}
+				);
+
+				return updatedPost;
+			}
+
+			// Handle the case where the user is not authenticated
+			// throw new AuthenticationError('You need to be logged in to add a comment');
 		},
 		savedComment: async (
 			parent,
@@ -250,16 +274,16 @@ const resolvers = {
 			if (context.user) {
 				const removeFriend = await User.findOneAndUpdate(
 					{ _id: context.user._id },
-					{ $pull: { friends:  friendsId  } },
+					{ $pull: { friends: friendsId } },
 					{ new: true }
 				);
 
 				const updatedFriend = await User.findOneAndUpdate(
-					{ _id:  friendsId },
-					{ $pull: { friends:   context.user._id  } },
+					{ _id: friendsId },
+					{ $pull: { friends: context.user._id } },
 					{ new: true }
 				);
-console.log(removeFriend)
+				console.log(removeFriend)
 				return {
 					currentUser: removeFriend,
 					friend: updatedFriend,
