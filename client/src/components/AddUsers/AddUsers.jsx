@@ -3,29 +3,48 @@ import { useQuery, useMutation } from '@apollo/client';
 import { ALL_USERS } from '../../utils/queries';
 import { ADD_FRIEND } from '../../utils/mutation';
 import {
-	getSavedUserIds,
 	saveFriendsId,
+	getSavedUserIds,
 } from '../../utils/localstorage';
 
 const AddUser = () => {
 	const [_users, setUsers] = useState([]);
 	const { loading, error, data } = useQuery(ALL_USERS);
 	const [addFriend] = useMutation(ADD_FRIEND);
-	const [savedUserIds, setSavedUserIds] = useState([]);
+	const [savedUserIds, setSavedUserIds] =
+		useState(getSavedUserIds);
 
 	useEffect(() => {
-		if (!loading && data) {
-			setSavedUserIds(getSavedUserIds());
-		}
+		
+			return () => saveFriendsId(savedUserIds);
+		
 	}, [loading, data]);
 
-	console.log(data);
+	// console.log(data);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
 	const allUsers = data.users;
-	console.log(allUsers);
+	// console.log(allUsers);
+
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
+		if (!data) {
+			return false;
+		}
+
+		try {
+			const dbUserList = allUsers.map((user) => ({
+				username: user.username,
+				friendsId: user._id || ['nothing to show'],
+			}));
+
+			setUsers(dbUserList);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	const handleAddFriend = async (_id) => {
 		const userToSave = allUsers.find(
@@ -52,15 +71,15 @@ const AddUser = () => {
 			);
 
 			setSavedUserIds((prevIds) => [...prevIds, _id]);
-			saveFriendsId([
-				...savedUserIds,
-				String(userToSave.friendsId),
-			]);
+			saveFriendsId(String(userToSave.friendsId));
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
+		const filteredUsers = allUsers.filter(
+			(user) => !savedUserIds.includes(user._id)
+		);
 	return (
 		<div
 			style={{
@@ -69,24 +88,26 @@ const AddUser = () => {
 				msOverflowStyle: 'none',
 			}}
 		>
-			{allUsers.map((user) => (
-				<div
-					key={user._id}
-					className='text-white feed-userListBg'
-				>
-					<div className='postBg flex justify-between items-center p-4'>
-						<p className='text-2xl'>{user.username}</p>
-						<button
-							onClick={() =>
-								handleAddFriend(user._id, user.username)
-							}
-							className='buttons text-white px-4 py-2 rounded'
-						>
-							Add Friend
-						</button>
+			<form onSubmit={handleFormSubmit}>
+				{filteredUsers.map((user) => (
+					<div
+						key={user._id}
+						className='text-white feed-userListBg'
+					>
+						<div className='postBg flex justify-between items-center p-4'>
+							<p className='text-2xl'>{user.username}</p>
+							<button
+								onClick={() =>
+									handleAddFriend(user._id, user.username)
+								}
+								className='buttons text-white px-4 py-2 rounded'
+							>
+								Add Friend
+							</button>
+						</div>
 					</div>
-				</div>
-			))}
+				))}
+			</form>
 			<style>
 				{`
       /* Hide the scrollbar for WebKit browsers */
