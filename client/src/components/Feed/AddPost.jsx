@@ -18,7 +18,6 @@ const AddPost = () => {
   const [addPostMutation] = useMutation(ADD_POST, {
 			refetchQueries: [QUERY_POSTS, 'getPosts', QUERY_ME, 'me'],
 		});
-    
     // Update the cache after a new post is added
     // update(cache, { data: { addPost } }) {
     //   // Read the existing posts from the cache

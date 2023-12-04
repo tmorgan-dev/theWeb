@@ -34,7 +34,7 @@ const resolvers = {
 					path: 'friends',
 					populate: { path: 'friendPosts' } // Populate friendPosts for each friend
 				});
-				
+
 				const friendPosts = user.friends.reduce((posts, friend) => {
 					if (friend.friendPosts.length > 0) {
 						friend.friendPosts.forEach((post) => {
@@ -46,26 +46,35 @@ const resolvers = {
 					}
 					return posts;
 				}, []);
-				
+
 				return friendPosts;
 			}
 			throw new AuthenticationError('You need to be logged in!');
 		},
-		
+
 		me: async (parent, args, context) => {
 			if (context.user) {
-			  const user = await User.findOne({ _id: context.user._id })
-				.populate('posts')
-				.populate({
-				  path: 'friends',
-				  populate: { path: 'friendPosts' } // Populate friendPosts for each friend
-				});
-	  
-			  return user;
+				const user = await User.findOne({ _id: context.user._id })
+					.populate('posts')
+					.populate({
+						path: 'friends',
+						populate: { path: 'friendPosts' } // Populate friendPosts for each friend
+					});
+
+
+
+				for (let i = 0; i < user.friends.length; i++) {
+				    const friendPost = await Post.find({postAuthor: user.friends[i]})
+				    console.log(friendPost)
+				    user.friendPosts.push(...friendPost)
+
+				}
+
+				return user;
 			}
 			throw new AuthenticationError('You need to be logged in!');
-		  },
 		},
+	},
 
 	Mutation: {
 		createUser: async (

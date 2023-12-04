@@ -22,5 +22,85 @@
         "commentAuthor": "Ben Kenobi"
       }
     ]
+  },
+  {
+    "postText": "I find your lack of faith disturbing.",
+    "postAuthor": "Darth Vader",
+    "comments": [
+      {
+        "commentText": "The power of the Dark Side!",
+        "commentAuthor": "Emperor Palpatine"
+      }
+    ]
+  },
+  {
+    "postText": "Aren't you a little short for a stormtrooper?",
+    "postAuthor": "Princess Leia",
+    "comments": [
+      {
+        "commentText": "Luke, it's a rescue!",
+        "commentAuthor": "Han Solo"
+      }
+    ]
+  },
+  {
+    "postText": "You underestimate the power of the Force.",
+    "postAuthor": "Darth Vader",
+    "comments": [
+      {
+        "commentText": "I've got a bad feeling about this...",
+        "commentAuthor": "Han Solo"
+      }
+    ]
+  },
+  {
+    "postText": "I'd just as soon kiss a Wookiee.",
+    "postAuthor": "Princess Leia",
+    "comments": [
+      {
+        "commentText": "I can arrange that!",
+        "commentAuthor": "Han Solo"
+      }
+    ]
+  },
+  {
+    "postText": "I am altering the deal. Pray I don't alter it any further.",
+    "postAuthor": "Darth Vader",
+    "comments": [
+      {
+        "commentText": "This deal is getting worse all the time.",
+        "commentAuthor": "Lando Calrissian"
+      }
+    ]
+  },
+  {
+    "postText": "Into the garbage chute, flyboy!",
+    "postAuthor": "Princess Leia",
+    "comments": [
+      {
+        "commentText": "Great, kid! Don't get cocky.",
+        "commentAuthor": "Han Solo"
+      }
+    ]
+  },
+  {
+    "postText": "I am the Senate.",
+    "postAuthor": "Darth Vader",
+    "comments": [
+      {
+        "commentText": "Not yet.",
+        "commentAuthor": "Mace Windu"
+      }
+    ]
+  },
+  {
+    "postText": "Someone has to save our skins.",
+    "postAuthor": "Princess Leia",
+    "comments": [
+      {
+        "commentText": "I've got a bad feeling about this...",
+        "commentAuthor": "Han Solo"
+      }
+    ]
   }
 ]
