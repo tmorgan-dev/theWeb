@@ -7,7 +7,7 @@ const {
 const resolvers = {
 	Query: {
 		users: async () => {
-			return User.find().populate('posts');
+			return User.find().populate('posts').populate('friends');
 		},
 		friends: async (parent, { _id, username }) => {
 			return User.find({ _id, username });

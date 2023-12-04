@@ -12,7 +12,7 @@ type User {
     stackOverflow: String
     posts: [Post]
     friendCount: Int
-    friends: [Friend]
+    friends: [User]
     friendPosts: [Post]
 
 }
@@ -63,7 +63,7 @@ type Query {
     post(postId: ID!): Post
     users: [User]
     friend( _id: ID!, username: String!): Friend
-    friends(friendsId: ID!, username: String): Friends
+    friends(friendsId: ID!, username: String): User
     friendPosts: [Post]
 }
 

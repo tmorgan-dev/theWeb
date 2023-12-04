@@ -32,27 +32,50 @@ export const QUERY_USER = gql`
 `;
 
 export const ALL_USERS = gql`
-	query users {
+	query Query {
 		users {
 			_id
 			username
-			bio
 			email
+			pic
+			location
+			bio
+			gitHub
+			linkedIn
+			instagram
+			stackOverflow
+			posts {
+				_id
+				postText
+				createdAt
+				postAuthor
+				comments {
+					_id
+					commentText
+					commentAuthor
+					createdAt
+				}
+			}
 			friendCount
 			friends {
 				_id
 				username
+				email
+				pic
+				location
+				bio
+				gitHub
+				linkedIn
+				instagram
+				stackOverflow
+				friendCount
 			}
-			posts {
-				comments {
-					commentText
-				}
-				postAuthor
-				createdAt
+			friendPosts {
+				_id
 				postText
+				createdAt
+				postAuthor
 			}
-			location
-			pic
 		}
 	}
 `;

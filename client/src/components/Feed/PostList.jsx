@@ -7,7 +7,7 @@ import AddComment from './AddComment';
 const Posts = () => {
     const user = AuthService.getProfile();
     const authToken = AuthService.getToken();
-    console.log(authToken)
+    // console.log(authToken)
     const [userInfo, setUserInfo] = useState({
         postText: '',
         postAuthor: user ? user.username : '',
@@ -22,10 +22,12 @@ const Posts = () => {
                 posts: data.me.posts,
                 postAuthor: data.me.username,
                 friends: data.me.friends,
-                friendPosts: data.me.friendPosts,
+                
             });
         }
     }, [data]);
+
+    // console.log(data);
 
     const handleCommentToggle = (postId) => {
         setCommentToggle((prevToggles) => ({
