@@ -13,6 +13,7 @@ type User {
     posts: [Post]
     friendCount: Int
     friends: [Friend]
+    friendPosts: [Post]
 
 }
 
@@ -62,6 +63,7 @@ type Query {
     users: [User]
     friend( _id: ID!, username: String!): Friend
     friends(friendsId: ID!, username: String): Friends
+    friendPosts: [Post]
     
 }
 

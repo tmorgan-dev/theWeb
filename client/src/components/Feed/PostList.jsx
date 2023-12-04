@@ -20,6 +20,8 @@ const Posts = () => {
             setUserInfo({
                 posts: data.me.posts,
                 postAuthor: data.me.username,
+                friends: data.me.friends,
+                friendPosts: data.me.friendPosts,
             });
         }
     }, [data]);
@@ -33,13 +35,13 @@ const Posts = () => {
 
     if (!data || !data.me || !data.me.posts) return <p>No posts found</p>;
 
-    const { posts } = data.me;
-
+    const { posts, friendPosts } = data.me;
+console.log(data.me.friendPosts)
     return (
         <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <h1 className="font-bold mb-4">Your Posts</h1>
             <ul>
-                {posts.map((post) => (
+            {posts.map((post) => (
                     <li key={post._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <p className="text-white userPostName">{data.me.username}</p>
@@ -66,6 +68,27 @@ const Posts = () => {
                     </li>
                 ))}
             </ul>
+            <h1 className="font-bold mb-4">Friend Posts</h1>
+            <ul>
+            {friendPosts && friendPosts.map((friendPost) => (
+                <li key={friendPost._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
+                    {/* Display friend posts */}
+                    {/* You might need to find the respective friend's username from the 'friends' array */}
+                    {/* Example: Find the friend's username based on the friend's ID */}
+                    {userInfo.friends && userInfo.friends.map((friend) => {
+                        if (friend._id === friendPost.friendsId) {
+                            return (
+                                <div key={friend._id}>
+                                    <p>{friend.username}</p>
+                                    <p>{friendPost.postText}</p>
+                                </div>
+                            );
+                        }
+                        return null;
+                    })}
+                </li>
+            ))}
+        </ul>
             <style>
                 {`
                     /* Hide the scrollbar for WebKit browsers */
