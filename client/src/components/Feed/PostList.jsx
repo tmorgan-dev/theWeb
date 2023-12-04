@@ -13,9 +13,8 @@ const Posts = () => {
         postAuthor: user ? user.username : '',
     });
 
+    const [commentToggle, setCommentToggle] = useState(false);
     const { loading, data } = useQuery(QUERY_ME);
-    console.log("17,",data)
-    const [toggleComments, setToggleComments] = useState({});
 
     useEffect(() => {
         if (data && data.me) {
@@ -28,17 +27,17 @@ const Posts = () => {
         }
     }, [data]);
 
-    const handleToggleComments = (postId) => {
-        setToggleComments(prevState => ({
-            ...prevState,
-            [postId]: !prevState[postId]
+    const handleCommentToggle = (postId) => {
+        setCommentToggle((prevToggles) => ({
+            ...prevToggles,
+            [postId]: !prevToggles[postId],
         }));
     };
 
-    if (!data || !data.me || !data.me.posts) return <p>No posts found</p>;
+    if (!data || !data.me || !data.me.friendPosts) return <p>No posts found</p>;
 
     const { posts, friendPosts } = data.me;
-console.log(data.me.friendPosts)
+console.log(...friendPosts)
     return (
         <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <h1 className="font-bold mb-4">Your Posts</h1>
@@ -50,10 +49,10 @@ console.log(data.me.friendPosts)
                             <p className="text-white">{post.createdAt}</p>
                         </div>
                         <p className="text-2xl font-semibold mb-2">{post.postText}</p>
-                        <button className="mt-2 buttons hover:bg-purple-400 text-white font-bold text-sm py-1 px-2 rounded" onClick={() => handleToggleComments(post._id)}>
-                            {toggleComments[post._id] ? 'Nevermind' : 'View Comments'}
+                        <button className="mt-2 buttons hover:bg-purple-400 text-white font-bold text-sm py-1 px-2 rounded" onClick={() => handleCommentToggle(post._id)}>
+                            {commentToggle[post._id] ? 'Nevermind' : 'Add a comment'}
                         </button>
-                        {toggleComments[post._id] && post.comments && post.comments.length > 0 && (
+                        {commentToggle[post._id] && (
                             <ul className="mt-4">
                                 {post.comments.map((comment) => (
                                     <li key={comment._id} className="postBg p-2 rounded-md shadow-sm mb-2">
@@ -72,23 +71,23 @@ console.log(data.me.friendPosts)
             </ul>
             <h1 className="font-bold mb-4">Friend Posts</h1>
             <ul>
-            {friendPosts && friendPosts.map((friendPost) => (
+            {userInfo.friendPosts && userInfo.friendPosts.map((friendPost) => (
                 <li key={friendPost._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
-                    {/* Display friend posts */}
-                    {/* You might need to find the respective friend's username from the 'friends' array */}
-                    {/* Example: Find the friend's username based on the friend's ID */}
-                    {userInfo.friends && userInfo.friends.map((friend) => {
-                        if (friend._id === friendPost.friendsId) {
-                            return (
-                                <div key={friend._id}>
-                                    <p>{friend.username}</p>
-                                    <p>{friendPost.postText}</p>
-                                </div>
-                            );
-                        }
-                        return null;
-                    })}
-                </li>
+                        {/* Display friend posts */}
+                        {/* You might need to find the respective friend's username from the 'friends' array */}
+                        {/* Example: Find the friend's username based on the friend's ID */}
+                        {userInfo.friends && userInfo.friends.map((friend) => {
+                            if (friend._id === friendPost.friendsId) {
+                                return (
+                                    <div key={friend._id}>
+                                        <p>{friend.username}</p>
+                                        <p>{friendPost.postText}</p>
+                                    </div>
+                                );
+                            }
+                            return null;
+                        })}
+                    </li>
             ))}
         </ul>
             <style>
