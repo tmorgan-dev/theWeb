@@ -52,6 +52,12 @@ const userSchema = new Schema(
 				ref: 'User',
 			},
 		],
+		friendPosts: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Post',
+			},
+		],
 	},
 	{
 		toJSON: {
