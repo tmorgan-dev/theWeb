@@ -97,46 +97,36 @@ export const QUERY_SINGLE_POST = gql`
 `;
 
 export const QUERY_ME = gql`
-	query me {
-		me {
-			_id
-			username
-			email
-			pic
-			location
-			bio
-			gitHub
-			linkedIn
-			instagram
-			stackOverflow
-			posts {
-				_id
-				postText
-				createdAt
-				postAuthor
-				comments {
-					_id
-					commentText
-					commentAuthor
-					createdAt
+    query me {
+    me {
+      username
+      posts {
+        _id
+        postText
+        createdAt
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
         }
-			}
-			friends {
-				_id
-				username
-			}
-			friendPosts {
-				_id
-				postText
-				createdAt
-				postAuthor
-				comments {
-				  _id
-				  commentText
-				  commentAuthor
-				  createdAt
-				}
-			  }
-		}
-	}
+      }
+      friends {
+        _id
+        username
+        friendPosts {
+          _id
+          postText
+          createdAt
+          comments {
+            _id
+            commentText
+            commentAuthor
+            createdAt
+          }
+        }
+      }
+    }
+  }
 `;
+

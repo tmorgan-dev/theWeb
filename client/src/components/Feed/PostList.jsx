@@ -15,7 +15,7 @@ const Posts = () => {
 
     const [commentToggle, setCommentToggle] = useState(false);
     const { loading, data } = useQuery(QUERY_ME);
-
+    
     useEffect(() => {
         if (data && data.me) {
             setUserInfo({
@@ -34,10 +34,12 @@ const Posts = () => {
         }));
     };
 
-    if (!data || !data.me || !data.me.friendPosts) return <p>No posts found</p>;
+    if (loading) return <p>Loading...</p>;
+    if (!data || !data.me || !data.me.posts) return <p>No posts found</p>;
 
     const { posts, friendPosts } = data.me;
-console.log(...friendPosts)
+    console.log(data.me);
+
     return (
         <div className="postBg p-4 m-4 rounded-lg shadow-md text-white" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <h1 className="font-bold mb-4">Your Posts</h1>
@@ -72,12 +74,9 @@ console.log(...friendPosts)
             <h1 className="font-bold mb-4">Friend Posts</h1>
             <ul>
             {userInfo.friendPosts && userInfo.friendPosts.map((friendPost) => (
-                <li key={friendPost._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
-                        {/* Display friend posts */}
-                        {/* You might need to find the respective friend's username from the 'friends' array */}
-                        {/* Example: Find the friend's username based on the friend's ID */}
-                        {userInfo.friends && userInfo.friends.map((friend) => {
-                            if (friend._id === friendPost.friendsId) {
+    <li key={friendPost._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
+        {userInfo.friends && userInfo.friends.map((friend) => {
+            if (friend._id === friendPost.friendsId) {
                                 return (
                                     <div key={friend._id}>
                                         <p>{friend.username}</p>

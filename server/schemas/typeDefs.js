@@ -44,12 +44,13 @@ type Auth {
 type Friend {
     _id: ID!
     username: String
+    friendPosts: [Post]
 }
 
 type Friends {
     friendsId: ID
     username: String
-
+    friendPosts: [Post]
 }
 type FriendUser {
     currentUser: User
@@ -64,7 +65,6 @@ type Query {
     friend( _id: ID!, username: String!): Friend
     friends(friendsId: ID!, username: String): Friends
     friendPosts: [Post]
-    
 }
 
 type Mutation {
