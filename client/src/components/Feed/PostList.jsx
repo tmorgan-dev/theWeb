@@ -7,12 +7,14 @@ import AddComment from './AddComment';
 const Posts = () => {
     const user = AuthService.getProfile();
     const authToken = AuthService.getToken();
+    console.log(authToken)
     const [userInfo, setUserInfo] = useState({
         postText: '',
         postAuthor: user ? user.username : '',
     });
 
-    const { data } = useQuery(QUERY_ME);
+    const { loading, data } = useQuery(QUERY_ME);
+    console.log("17,",data)
     const [toggleComments, setToggleComments] = useState({});
 
     useEffect(() => {
