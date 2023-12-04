@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './style.css'
 
-export default function Modal({showModal, setShowModal}) {
+export default function Modal({showModal, userInfo, setShowModal}) {
     // const [showModal, setShowModal] = useState(false);
     return (
         <>
@@ -75,13 +75,14 @@ export default function Modal({showModal, setShowModal}) {
                                             Edit Username?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
+                                            <input type="text" className="text-black" placeholder={userInfo.userName}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Update
                                             </button>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
@@ -102,6 +103,7 @@ export default function Modal({showModal, setShowModal}) {
                                             Edit Bio?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
+                                        <input type="text" className="text-black" placeholder={userInfo.userBio}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
@@ -129,6 +131,7 @@ export default function Modal({showModal, setShowModal}) {
                                             Edit/Add GitHub profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
+                                        <input type="text" className="text-black" placeholder={userInfo.userGitHub}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
@@ -156,6 +159,7 @@ export default function Modal({showModal, setShowModal}) {
                                             Edit/Add LinkedIn profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
+                                        <input type="text" className="text-black" placeholder={userInfo.userLinkedIn}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
@@ -183,6 +187,7 @@ export default function Modal({showModal, setShowModal}) {
                                             Edit/Add Instagram profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
+                                        <input type="text" className="text-black" placeholder={userInfo.userInstagram}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
@@ -210,6 +215,7 @@ export default function Modal({showModal, setShowModal}) {
                                             Edit/Add StackOverflow profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
+                                        <input type="text" className="text-black" placeholder={userInfo.userStackOverflow}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>

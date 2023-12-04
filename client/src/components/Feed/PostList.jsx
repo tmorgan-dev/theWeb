@@ -75,6 +75,7 @@ const Posts = () => {
             <ul>
             {userInfo.friendPosts && userInfo.friendPosts.map((friendPost) => (
     <li key={friendPost._id} className="mb-4 p-4 feed-userListBg rounded-lg shadow-md">
+        {/* TODO: Fix this to match updated info in resolvers(lines 55-71) so that friend posts post to frontend.  */}
         {userInfo.friends && userInfo.friends.map((friend) => {
             if (friend._id === friendPost.friendsId) {
                                 return (
