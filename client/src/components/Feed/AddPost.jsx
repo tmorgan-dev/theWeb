@@ -55,12 +55,12 @@ const AddPost = () => {
     
     try {
       // Call the addPostMutation with the appropriate variables
-    const  data  = await addPostMutation({
-          variables: {
-            postText,
-          },
-          
-        });
+    const data = await addPostMutation({
+      variables: {
+            postAuthor,
+						postText: postText,
+					},
+				});
 
         console.log(data)
       

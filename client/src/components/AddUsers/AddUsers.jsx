@@ -8,7 +8,7 @@ import {
 } from '../../utils/localstorage';
 
 const AddUser = () => {
-	const [_users, setUsers] = useState([]);
+	const [users, setUsers] = useState([]);
 	const { loading, error, data } = useQuery(ALL_USERS);
 	const [addFriend] = useMutation(ADD_FRIEND);
 	const [savedUserIds, setSavedUserIds] =
