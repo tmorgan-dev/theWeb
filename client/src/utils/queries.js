@@ -125,6 +125,18 @@ export const QUERY_ME = gql`
 				_id
 				username
 			}
+			friendPosts {
+				_id
+				postText
+				createdAt
+				postAuthor
+				comments {
+				  _id
+				  commentText
+				  commentAuthor
+				  createdAt
+				}
+			  }
 		}
 	}
 `;

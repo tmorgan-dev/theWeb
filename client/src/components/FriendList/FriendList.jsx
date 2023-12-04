@@ -15,7 +15,7 @@ const FriendsList = ({  username }) => {
 		],
 	});
 	// console.log(data);
-
+	
 	const [deleteFriend] = useMutation(DELETE_FRIEND, {
 		refetchQueries: () => [
 			{
@@ -60,7 +60,7 @@ const FriendsList = ({  username }) => {
 			{friends.map((friend) => (
 				<div key={friend._id} className='text-white feed-userListBg'>
 					<div className='postBg  flex justify-between items-center p-4'>
-						<p className="text-2xl">{friend.username}{' '}</p>
+						<button className="text-2xl">{friend.username}{' '}</button>
 							<button className='buttons text-white px-4 py-2 rounded' id={friend._id} onClick={(e) => handleDeleteFriend(e.target.getAttribute('id') )}>
 							Remove Friend
 							</button>

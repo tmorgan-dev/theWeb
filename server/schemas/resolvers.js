@@ -34,23 +34,44 @@ const resolvers = {
 		post: async (parent, { postId }) => {
 			return Post.findOne({ _id: postId });
 		},
-		me: async (parent, args, context) => {
+		friendPosts: async (parent, args, context) => {
 			if (context.user) {
-				const user = await User.findOne({
-					_id: context.user._id,
-				})
-					.populate({
-						path: 'posts',
-						populate: {
-							path: 'comments',
-						},
-					})
-					.populate('friends');
-
-				return user;
+			  const user = await User.findById(context.user._id).populate({
+				path: 'friends',
+				populate: { path: 'posts' }
+			  });
+		  
+			  const friendPosts = user.friends.reduce((posts, friend) => {
+				if (friend.posts.length > 0) {
+				  friend.posts.forEach((post) => {
+					// Attach friend's ID and username to each post
+					post.friendsId = friend._id;
+					post.friendUsername = friend.username;
+				  });
+				  posts.push(...friend.posts);
+				}
+				return posts;
+			  }, []);
+		  
+			  return friendPosts;
 			}
-			throw AuthenticationError;
-		},
+			throw new AuthenticationError('You need to be logged in!');
+		  },
+		  
+		  // Modify the existing 'me' resolver to populate 'friendPosts'
+		  me: async (parent, args, context) => {
+			if (context.user) {
+			  const user = await User.findOne({ _id: context.user._id })
+				.populate('posts')
+				.populate({
+				  path: 'friends',
+				  populate: { path: 'posts' }
+				});
+	  
+			  return user;
+			}
+			throw new AuthenticationError('You need to be logged in!');
+		  },
 	},
 
 	Mutation: {
