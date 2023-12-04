@@ -12,13 +12,6 @@ const resolvers = {
 		friends: async (parent, { _id, username }) => {
 			return User.find({ _id, username });
 		},
-		user: async (parent, { username }) => {
-			console.log(username);
-			return User.findOne({ username })
-				.populate('posts')
-				.populate('friends');
-			// changed back to populate friends and posts in gql
-		},
 		// posts: async (parent, { username }) => {
 		// 	const params = username ? { username } : {};
 		// 	return Post.find(params).sort({ createdAt: -1 });
@@ -34,45 +27,45 @@ const resolvers = {
 		post: async (parent, { postId }) => {
 			return Post.findOne({ _id: postId });
 		},
+
 		friendPosts: async (parent, args, context) => {
 			if (context.user) {
-			  const user = await User.findById(context.user._id).populate({
-				path: 'friends',
-				populate: { path: 'posts' }
-			  });
-		  
-			  const friendPosts = user.friends.reduce((posts, friend) => {
-				if (friend.posts.length > 0) {
-				  friend.posts.forEach((post) => {
-					// Attach friend's ID and username to each post
-					post.friendsId = friend._id;
-					post.friendUsername = friend.username;
-				  });
-				  posts.push(...friend.posts);
-				}
-				return posts;
-			  }, []);
-		  
-			  return friendPosts;
+				const user = await User.findById(context.user._id).populate({
+					path: 'friends',
+					populate: { path: 'friendPosts' } // Populate friendPosts for each friend
+				});
+				
+				const friendPosts = user.friends.reduce((posts, friend) => {
+					if (friend.friendPosts.length > 0) {
+						friend.friendPosts.forEach((post) => {
+							// Attach friend's ID and username to each post
+							post.friendsId = friend._id;
+							post.friendUsername = friend.username;
+						});
+						posts.push(...friend.friendPosts);
+					}
+					return posts;
+				}, []);
+				
+				return friendPosts;
 			}
 			throw new AuthenticationError('You need to be logged in!');
-		  },
-		  
-		  // Modify the existing 'me' resolver to populate 'friendPosts'
-		  me: async (parent, args, context) => {
+		},
+		
+		me: async (parent, args, context) => {
 			if (context.user) {
 			  const user = await User.findOne({ _id: context.user._id })
 				.populate('posts')
 				.populate({
 				  path: 'friends',
-				  populate: { path: 'posts' }
+				  populate: { path: 'friendPosts' } // Populate friendPosts for each friend
 				});
 	  
 			  return user;
 			}
 			throw new AuthenticationError('You need to be logged in!');
 		  },
-	},
+		},
 
 	Mutation: {
 		createUser: async (
