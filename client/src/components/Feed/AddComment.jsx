@@ -25,22 +25,25 @@ const AddComment = ({ postId }) => {
   };
 
   return (
-    <div className="flex items-center mb-2">
-      <input
-        type="text"
-        value={commentInput}
-        onChange={handleCommentInputChange}
-        placeholder="Add a comment..."
-        className="postBg p-1 mr-2 bg-transparent text-white rounded-md focus:outline-none"
-      />
-      <button
-        onClick={handleAddComment}
-        disabled={commentLoading}
-        className="buttons hover:bg-purple-400 text-white font-bold py-1 px-2 rounded focus:outline-none"
-      >
-        {commentLoading ? 'Adding...' : 'Add Comment'}
-      </button>
-    </div>
+<div className="flex items-center mb-2">
+  <input
+    type="text"
+    value={commentInput}
+    onChange={handleCommentInputChange}
+    placeholder="Add a comment..."
+    className="postBg rounded-md p-2 flex-grow bg-transparent text-white focus:outline-none"
+    // Use flex-grow to allow the input to grow and fill remaining space
+  />
+  <button
+    onClick={handleAddComment}
+    disabled={commentLoading}
+    className="buttons hover:bg-purple-400 text-white font-bold py-2 px-4 rounded focus:outline-none"
+    // Preserve the button styling
+  >
+    {commentLoading ? 'Adding...' : 'Add Comment'}
+  </button>
+</div>
+
   );
 };
 
