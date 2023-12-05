@@ -14,29 +14,24 @@ type User {
     friendCount: Int
     friends: [User]
     friendPosts: [Post]
-
 }
-
-
 type Post {
     _id: ID!
+    username: [Post]
     postText: String
     createdAt: String
     postAuthor: String
     comments: [Comment]
 }
-
 input Postinput {
     postText: String!
 }
-
 type Comment {
     _id: ID!
     commentText: String!
     commentAuthor: String!
     createdAt: String
 }
-
 type Auth {
     token: ID!
     user: User
@@ -46,7 +41,6 @@ type Friend {
     username: String
     friendPosts: [Post]
 }
-
 type Friends {
     friendsId: ID
     username: String
@@ -66,7 +60,6 @@ type Query {
     friends(friendsId: ID!, username: String): User
     friendPosts: [Post]
 }
-
 type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     loginUser(email: String!, password: String!): Auth
@@ -80,16 +73,4 @@ type Mutation {
     deleteComment(_id: ID!): User
   }
 `;
-
-module.exports = typeDefs
-
-
-// savedReaction: [ Reaction ]
-
-// type Reaction {
-//     _id: ID!
-//     image: String
-// }
-
-// savedReaction(_id: ID!): User
-// deleteReaction(_id: ID!): User
+module.exports = typeDefs;

@@ -30,49 +30,57 @@ const resolvers = {
 
 		friendPosts: async (parent, args, context) => {
 			if (context.user) {
-				const user = await User.findById(context.user._id).populate({
+				const user = await User.findById(
+					context.user._id
+				).populate({
 					path: 'friends',
-					populate: { path: 'friendPosts' } // Populate friendPosts for each friend
+					populate: { path: 'friendPosts' }, // Populate friendPosts for each friend
 				});
-
-				const friendPosts = user.friends.reduce((posts, friend) => {
-					if (friend.friendPosts.length > 0) {
-						friend.friendPosts.forEach((post) => {
-							// Attach friend's ID and username to each post
-							post.friendsId = friend._id;
-							post.friendUsername = friend.username;
-						});
-						posts.push(...friend.friendPosts);
-					}
-					return posts;
-				}, []);
-
+				const friendPosts = user.friends.reduce(
+					(posts, friend) => {
+						if (friend.friendPosts.length > 0) {
+							friend.friendPosts.forEach((post) => {
+								// Attach friend's ID and username to each post
+								post.friendsId = friend._id;
+								post.friendUsername = friend.username;
+								post.friendPostTxt = friend.postText;
+							});
+							posts.push(...friend.friendPosts);
+						}
+						return posts;
+					},
+					[]
+				);
 				return friendPosts;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw new AuthenticationError(
+				'You need to be logged in!'
+			);
 		},
-
 		me: async (parent, args, context) => {
 			if (context.user) {
-				const user = await User.findOne({ _id: context.user._id })
+				const user = await User.findOne({
+					_id: context.user._id,
+				})
 					.populate('posts')
 					.populate({
 						path: 'friends',
-						populate: { path: 'friendPosts' } // Populate friendPosts for each friend
+						populate: { path: 'friendPosts' }, // Populate friendPosts for each friend
 					});
 
-
-
 				for (let i = 0; i < user.friends.length; i++) {
-				    const friendPost = await Post.find({postAuthor: user.friends[i]})
-				    console.log(friendPost)
-				    user.friendPosts.push(...friendPost)
-
+					const friendPost = await Post.find({
+						postAuthor: user.friends[i],
+					});
+					console.log(friendPost);
+					user.friendPosts.push(...friendPost);
 				}
 
 				return user;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw new AuthenticationError(
+				'You need to be logged in!'
+			);
 		},
 	},
 
@@ -185,7 +193,11 @@ const resolvers = {
 		// 		}
 		// 	);
 		// },
-		addComment: async (parent, { postId, commentText }, context) => {
+		addComment: async (
+			parent,
+			{ postId, commentText },
+			context
+		) => {
 			if (context.user) {
 				const updatedPost = await Post.findOneAndUpdate(
 					{ _id: postId },
@@ -306,7 +318,7 @@ const resolvers = {
 					{ $pull: { friends: context.user._id } },
 					{ new: true }
 				);
-				console.log(removeFriend)
+				console.log(removeFriend);
 				return {
 					currentUser: removeFriend,
 					friend: updatedFriend,
