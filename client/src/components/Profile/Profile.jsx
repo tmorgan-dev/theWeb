@@ -119,7 +119,7 @@ function Profile () {
                     }}><FaStackOverflow />
                 </a>
             </div>
-            {showModal ? <Modal showModal={showModal} userInfo={userInfo} setShowModal={setShowModal}/>: null}
+            {showModal ? <Modal showModal={showModal} userInfo={userInfo} setShowModal={setShowModal} setUserInfo={setUserInfo}/>: null}
         </div>
     );
 }

@@ -1,8 +1,12 @@
 .modalBox {
     display: flex;
     margin: 50px;
+    text-shadow: 1px 1px 3px black;
 }
 
+.modalBox .question {
+    text-shadow:1px 1px 3px rgb(95, 53, 95);
+}
 /* .modalBox .button:hover {
     background-color: blue;
 } */
