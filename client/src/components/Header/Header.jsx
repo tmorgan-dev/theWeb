@@ -10,13 +10,17 @@ function Header() {
 
 	return (
 		<nav className='text-white fixed w-full top-O'>
-			<div className='container flex items-center justify-between'>
+			<div className='container-fluid flex items-center'>
 				<div className='flex items-center'>
 					<img src={spoderLogo} alt='spider logo' className='mt-1 mr-2' width='50' height='50'></img>
 					<div className='logo-navbar-brand'>theWeb</div>
 				</div>
 				{isLoggedIn && (
-					<Link to="#" className="logout-link" onClick={() => AuthService.logout()}>Logout</Link>
+					<div className='ml-auto'>
+						<div className='mr-2'>
+							<Link to="#" className="logout-link" onClick={() => AuthService.logout()}>Logout</Link>
+						</div>
+					</div>
 				)}
 			</div>
 		</nav>
