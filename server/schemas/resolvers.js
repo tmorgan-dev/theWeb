@@ -115,6 +115,21 @@ const resolvers = {
 
 			return { token, user };
 		},
+
+		updateUserInfo: async (parent, { username, bio, github, linkedIn, instagram, stackOverflow}, context) => {
+			if (context.user) {
+				const user = await User.findOneAndUpdate(
+					{ _id: context.user._id},
+					{ username: username, bio: bio, github: github, linkedIn: linkedIn, instagram: instagram, stackOverflow: stackOverflow },
+					{ new: true }
+				
+				)
+				return user
+
+			}
+
+		},
+
 		addPost: async (parent, { postText }, context) => {
 			if (context.user) {
 				const post = await Post.create({

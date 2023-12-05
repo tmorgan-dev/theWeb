@@ -63,6 +63,7 @@ type Query {
 type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     loginUser(email: String!, password: String!): Auth
+    updateUserInfo(username: String!, bio: String, github: String, linkedIn: String, instagram: String, stackOverflow: String): User
     addFriend(username: String, friendsId: ID): FriendUser
     deleteFriend(friendsId: ID!): FriendUser
     addPost(postText: String!): Post

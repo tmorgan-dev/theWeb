@@ -1,8 +1,22 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 import './style.css'
+import { UPDATE_USER_INFO } from "../../utils/mutation";
 
-export default function Modal({showModal, userInfo, setShowModal}) {
-    // const [showModal, setShowModal] = useState(false);
+export default function Modal({showModal, userInfo, setShowModal, setUserInfo}) {
+    const [updateUserInfo, { error }] = useMutation(UPDATE_USER_INFO);
+    
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+    
+        // if (name === 'userName' && value.length <= 50) {
+          setUserInfo({ ...userInfo, [name]: value });
+        //   setCharacterCount(value.length);
+        // } else if (name !== 'userName', 'userBio') {
+        //   setFormState({ ...formState, [name]: value });
+        // }
+      };
+
     return (
         <>
             <div className="flex items-center justify-center h-60">
@@ -40,11 +54,11 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                                 />
                                         </svg>
                                     </div> */}
-                                    <div className="mt-2 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-2 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             Profile Picture
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit Picture?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
@@ -54,10 +68,10 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Upload
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -67,15 +81,18 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                         </div>
                                     </div>
 
-                                    <div className="mt-8 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-8 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             Username
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit Username?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
-                                            <input type="text" className="text-black" placeholder={userInfo.userName}></input>
+                                            <input type="text" className="text-black"
+                                            name="userName" placeholder={userInfo.userName}
+                                            value={userInfo.userName}
+                                            onChange={handleChange}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
@@ -85,7 +102,7 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                                 Update
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -95,25 +112,28 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                         </div>
                                     </div>
 
-                                    <div className="mt-8 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-8 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             Bio
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit Bio?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
-                                        <input type="text" className="text-black" placeholder={userInfo.userBio}></input>
+                                        <input type="text" className="text-black"
+                                            name="userBio" placeholder={userInfo.userBio}
+                                            value={userInfo.userBio}
+                                            onChange={handleChange}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Update
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -123,25 +143,28 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                         </div>
                                     </div>
 
-                                    <div className="mt-8 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-8 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             GitHub
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit/Add GitHub profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
-                                        <input type="text" className="text-black" placeholder={userInfo.userGitHub}></input>
+                                        <input type="text" className="text-black"
+                                            name="userGitHub" placeholder={userInfo.userGitHub}
+                                            value={userInfo.userGitHub}
+                                            onChange={handleChange}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Update
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -151,25 +174,28 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                         </div>
                                     </div>
 
-                                    <div className="mt-8 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-8 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             LinkedIn
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit/Add LinkedIn profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
-                                        <input type="text" className="text-black" placeholder={userInfo.userLinkedIn}></input>
+                                        <input type="text" className="text-black"
+                                            name="userLinkedIn" placeholder={userInfo.userLinkedIn}
+                                            value={userInfo.userLinkedIn}
+                                            onChange={handleChange}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Update
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -179,25 +205,28 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                         </div>
                                     </div>
 
-                                    <div className="mt-8 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-8 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             Instagram
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit/Add Instagram profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
-                                        <input type="text" className="text-black" placeholder={userInfo.userInstagram}></input>
+                                        <input type="text" className="text-black"
+                                            name="userInstagram" placeholder={userInfo.userInstagram}
+                                            value={userInfo.userInstagram}
+                                            onChange={handleChange}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Update
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -207,25 +236,28 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                         </div>
                                     </div>
 
-                                    <div className="mt-8 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-8 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
                                             StackOverflow
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-black">
+                                        <p className="question mt-2 text-[17px] leading-relaxed text-black">
                                             Edit/Add StackOverflow profile link?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
-                                        <input type="text" className="text-black" placeholder={userInfo.userStackOverflow}></input>
+                                        <input type="text" className="text-black"
+                                            name="userStackOverflow" placeholder={userInfo.userStackOverflow}
+                                            value={userInfo.userStackOverflow}
+                                            onChange={handleChange}></input>
                                             <button
                                                 className="w-full mt-2 p-2.5 flex-1 text-white bg-purple-600 rounded-md outline-none ring-offset-2 ring-purple-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
                                                 >
-                                                Edit
+                                                Update
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }
@@ -249,11 +281,11 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                                 />
                                         </svg>
                                     </div>
-                                    <div className="mt-2 text-center sm:ml-4 sm:text-left">
+                                    <div className="container mt-2 text-center sm:ml-4 sm:text-left">
                                         <h4 className="text-lg font-medium text-white">
-                                            Delete account ?
+                                            Delete account
                                         </h4>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-white">
+                                        <p className="mt-2 text-[17px] leading-relaxed text-white">
                                             Are you sure you want to delete your account?
                                         </p>
                                         <div className="items-center gap-2 mt-3 sm:flex">
@@ -266,7 +298,7 @@ export default function Modal({showModal, userInfo, setShowModal}) {
                                                 Delete
                                             </button>
                                             <button
-                                                className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                                                className="w-full mt-2 p-2.5 flex-1 text-black bg-gray-200 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                                                 onClick={() =>
                                                     setShowModal(false)
                                                 }

@@ -12,6 +12,19 @@ export const LOGIN_USER = gql`
 	}
 `;
 
+export const UPDATE_USER_INFO = gql`
+	mutation updateUserInfo($username: String!, $bio: String, $github: String, $linkedIn: String, $instagram: String, $stackOverflow: String) {
+		updateUserInfo(username: $username, bio: $bio, github: $github, linkedIn: $linkedIn, instagram: $instagram, stackOverflow: $stackOverflow) {
+			username
+			bio
+			github
+			linkedIn
+			instagram
+			stackOverflow
+		}
+	}
+`;
+
 export const ADD_USER = gql`
 	mutation createUser(
 		$username: String!
