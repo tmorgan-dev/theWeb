@@ -4,12 +4,10 @@ import './style.css';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutation';
-// import { useNavigate } from "react-router-dom";
 
 import Auth from '../../utils/auth'
 
 const Login = ({ onToggleView }) => {
-	// const navigate =  useNavigate()
 
 	const [loginForm, setLoginData] = useState({ email: '', password: '' });
 	const [loginUser, { error }] =
@@ -31,17 +29,10 @@ const Login = ({ onToggleView }) => {
 			variables: { ...loginForm },
 		});
 		Auth.login(data.loginUser.token);
-	console.log('anything')
-		// navigate("/mainpage")
 	
 	} catch (e) {
 		console.error(e);
 	}
-	// clear form values
-	// setLoginData({
-	// 	email: '',
-	// 	password: '',
-	// });
 	};
 	return (
 		<div className='login min-h-screen flex items-center justify-center'>
@@ -90,9 +81,6 @@ const Login = ({ onToggleView }) => {
 					</button>
 					<div className='register'>
 						<p>Dont Have an Account?</p>
-						{/*<p>
-							<Link to="/landingpage">Register Here</Link>
-						</p>*/}
 						<button onClick={onToggleView} className='text-purple-300 hover:text-purple-200'>
 							Register Here
 	</button>

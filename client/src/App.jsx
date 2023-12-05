@@ -1,8 +1,5 @@
-// import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
-// import Landingpage from './pages/Landing/Landingpage';
-// import Mainpage from './pages/Main/Mainpage';
 import Footer from './components/Footer/Footer';
 import {
 	ApolloClient,
@@ -12,8 +9,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-
-//needs appollo inports etc
 import './App.css';
 const httpLink = createHttpLink({
 	uri: '/graphql',
@@ -38,9 +33,7 @@ function App() {
 		
 			<ApolloProvider client={client}>
 				<Header />
-				{/*<Landingpage />*/}
 				<Outlet />
-				{/*<Mainpage />*/}
 				<Footer />
 			</ApolloProvider>
 		

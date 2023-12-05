@@ -20,13 +20,10 @@ const AddUser = () => {
 		
 	}, [loading, data]);
 
-	// console.log(data);
-
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
 	const allUsers = data.users;
-	// console.log(allUsers);
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
