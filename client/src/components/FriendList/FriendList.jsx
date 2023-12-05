@@ -4,29 +4,19 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import { DELETE_FRIEND } from '../../utils/mutation';
+import { removeFriend } from '../../utils/localstorage';
 
-const FriendsList = ({  username }) => {
-	const { loading, error, data } = useQuery(QUERY_ME, {
-		variables: { friendsId: username },
-		refetchQueries: () => [
-			{
-				query: QUERY_ME,
-			},
-		],
-	});
+const FriendsList = () => {
+	const { loading, error, data } = useQuery(QUERY_ME)
+	
 	// console.log(data);
 	
-	const [deleteFriend] = useMutation(DELETE_FRIEND, {
-		refetchQueries: () => [
-			{
-				query: QUERY_ME,
-			},
-		],
-	});
+	const [deleteFriend] = useMutation(DELETE_FRIEND)
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
-	const { friends } = data.me;
+	const { friends } = data?.me;
 
 	if (!friends.length) {
 		return (
@@ -37,14 +27,21 @@ const FriendsList = ({  username }) => {
 	}
 
 	const handleDeleteFriend = async (friendsId) => {
-		console.log(friendsId);
+		// console.log(friendsId);
 		try {
 			const data = await deleteFriend({
 				variables: {
 					friendsId: friendsId,
 				},
+				// refetchQueries: () => [
+				// 	{
+				// 		query: QUERY_ME,
+				// 	},
+				// ],
 			});
-			console.log(data);
+
+			removeFriend(friendsId);
+			// console.log(data);
 		} catch (err) {
 			console.error(err);
 		}
