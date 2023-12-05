@@ -8,17 +8,19 @@ import {
 } from '../../utils/localstorage';
 
 const AddUser = () => {
+	const [addFriend] = useMutation(ADD_FRIEND);
 	const [users, setUsers] = useState([]);
 	const { loading, error, data } = useQuery(ALL_USERS);
-	const [addFriend] = useMutation(ADD_FRIEND);
 	const [savedUserIds, setSavedUserIds] =
-		useState(getSavedUserIds);
+		useState(
+			getSavedUserIds()
+		);
 
 	useEffect(() => {
 		
 			return () => saveFriendsId(savedUserIds);
 		
-	}, [loading, data]);
+	});
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
