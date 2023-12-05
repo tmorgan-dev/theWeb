@@ -12,10 +12,6 @@ const resolvers = {
 		friends: async (parent, { _id, username }) => {
 			return User.find({ _id, username });
 		},
-		// posts: async (parent, { username }) => {
-		// 	const params = username ? { username } : {};
-		// 	return Post.find(params).sort({ createdAt: -1 });
-		// },
 		posts: async (parent, { username }) => {
 			const params = username ? { postAuthor: username } : {};
 			const posts = await Post.find(params).sort({
@@ -34,13 +30,12 @@ const resolvers = {
 					context.user._id
 				).populate({
 					path: 'friends',
-					populate: { path: 'friendPosts' }, // Populate friendPosts for each friend
+					populate: { path: 'friendPosts' },
 				});
 				const friendPosts = user.friends.reduce(
 					(posts, friend) => {
 						if (friend.friendPosts.length > 0) {
 							friend.friendPosts.forEach((post) => {
-								// Attach friend's ID and username to each post
 								post.friendsId = friend._id;
 								post.friendUsername = friend.username;
 								post.friendPostTxt = friend.postText;
@@ -65,7 +60,7 @@ const resolvers = {
 					.populate('posts')
 					.populate({
 						path: 'friends',
-						populate: { path: 'friendPosts' }, // Populate friendPosts for each friend
+						populate: { path: 'friendPosts' },
 					});
 
 				for (let i = 0; i < user.friends.length; i++) {
@@ -122,14 +117,10 @@ const resolvers = {
 					{ _id: context.user._id},
 					{ username: username, bio: bio, github: github, linkedIn: linkedIn, instagram: instagram, stackOverflow: stackOverflow },
 					{ new: true }
-				
 				)
 				return user
-
 			}
-
 		},
-
 		addPost: async (parent, { postText }, context) => {
 			if (context.user) {
 				const post = await Post.create({
@@ -141,24 +132,7 @@ const resolvers = {
 					{ $push: { posts: post._id } },
 					{ new: true }
 				);
-
-				// Return the user associated with the post
-				// 	const user = await User.findOne({
-				// 		_id: context.user._id,
-				// 	})
-				// 		.populate('posts')
-				// 		.populate('friends');
-
-				// 	// Check if the user object has a username before returning
-				// 	if (user && user.username) {
-				// 		return user;
-				// 	} else {
-				// 		throw new Error('User does not have a username.');
-				// 	}
 			}
-			// throw new AuthenticationError(
-			// 	'You need to be logged in!'
-			// );
 		},
 
 		savedPost: async (parent, { postText }, context) => {
@@ -177,8 +151,6 @@ const resolvers = {
 
 				return post;
 			}
-			// throw AuthenticationError;
-			// ('You need to be logged in!');
 		},
 		deletePost: async (parent, { postId }, context) => {
 			if (context.user) {
@@ -196,18 +168,6 @@ const resolvers = {
 			}
 			throw AuthenticationError;
 		},
-		// addComment: async (parent, { postId, commentText }) => {
-		// 	return Post.findOneAndUpdate(
-		// 		{ _id: postId },
-		// 		{
-		// 			$addToSet: { comments: { commentText } },
-		// 		},
-		// 		{
-		// 			new: true,
-		// 			runValidators: true,
-		// 		}
-		// 	);
-		// },
 		addComment: async (
 			parent,
 			{ postId, commentText },
@@ -232,9 +192,6 @@ const resolvers = {
 
 				return updatedPost;
 			}
-
-			// Handle the case where the user is not authenticated
-			// throw new AuthenticationError('You need to be logged in to add a comment');
 		},
 		savedComment: async (
 			parent,

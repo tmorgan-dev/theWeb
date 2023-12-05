@@ -1,4 +1,3 @@
-//pending queries for user
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
@@ -80,17 +79,6 @@ export const ALL_USERS = gql`
 	}
 `;
 
-
-// export const QUERY_POSTS = gql`
-// 	query getPosts {
-// 		post {
-// 			_id
-// 			postText
-// 			postAuthor
-// 			createdAt
-// 		}
-// 	}
-// `;
 export const QUERY_POSTS = gql`
   query getPosts($postText: String!) {
     posts(postText: $postText) {

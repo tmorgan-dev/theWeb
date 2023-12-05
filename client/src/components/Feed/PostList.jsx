@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import AuthService from '../../utils/auth';
 import AddComment from './AddComment';
+
 const Posts = () => {
 	const user = AuthService.getProfile();
 	const authToken = AuthService.getToken();
@@ -11,6 +12,8 @@ const Posts = () => {
 		postText: '',
 		postAuthor: user ? user.username : '',
 	});
+
+	const [friendComment, friendCommentToggle] =useState(false);
 	const [commentToggle, setCommentToggle] = useState(false);
 	const { loading, data } = useQuery(QUERY_ME);
 	useEffect(() => {
@@ -24,17 +27,27 @@ const Posts = () => {
 			});
 		}
 	}, [data]);
-	//console.log(data.me.friendUsername);
+	console.log(data)
 	const handleCommentToggle = (postId) => {
 		setCommentToggle((prevToggles) => ({
 			...prevToggles,
 			[postId]: !prevToggles[postId],
 		}));
 	};
+	
+	const handleFriendToggle = (postId) => {
+		friendCommentToggle((prevToggles) => ({
+			...prevToggles,
+			[postId]: !prevToggles[postId],
+		}));
+	};
+	
 	if (loading) return <p>Loading...</p>;
-	if (!data || !data.me || !data.me.posts)
+	if (!data || !data.me || !data.me.friendPosts)
 		return <p>No posts found</p>;
 	const { posts, friendPosts } = data.me;
+	console.log(posts)
+	console.log(friendPosts)
 	return (
 		<div
 			className='postBg p-4 m-4 rounded-lg shadow-md text-white'
@@ -105,7 +118,7 @@ const Posts = () => {
 			<h1 className='font-bold mb-4'>Friend Posts</h1>
 			<ul>
 				{friendPosts &&
-					friendPosts.map((friendPost, friend) => (
+					friendPosts.map((friendPost) => (
 						<li
 							key={friendPost._id}
 							className='mb-4 p-4 feed-userListBg rounded-lg shadow-md'
@@ -125,6 +138,40 @@ const Posts = () => {
 							<p className='text-2xl font-semibold mb-2'>
 								{friendPost.postText}
 							</p>
+							<button
+							className='mt-2 buttons hover:bg-purple-400 text-white font-bold text-sm py-1 px-2 rounded'
+							onClick={() => handleFriendToggle(friendPost._id)}
+						>
+							{friendComment[friendPost._id]
+								? 'Nevermind'
+								: 'Add a comment'}
+						</button>
+						{friendComment[friendPost._id] && (
+							<ul className='mt-4'>
+								{friendPost.commentText && friendPost.commentText.map((comment) => (
+									<li
+										key={comment._id}
+										className='postBg p-2 rounded-md shadow-sm mb-2'
+									>
+										<div
+											style={{
+												display: 'flex',
+												justifyContent: 'space-between',
+											}}
+										>
+											<p className='text-white userCommentName'>
+												{comment.commentAuthor}
+											</p>
+											<p className='text-white'>{comment.createdAt}</p>
+										</div>
+										<p className='text-md font-medium text-white'>
+											{comment.commentText}
+										</p>
+									</li>
+								))}
+								<AddComment postId={friendPost._id} />
+							</ul>
+						)}
 						</li>
 					))}
 			</ul>
