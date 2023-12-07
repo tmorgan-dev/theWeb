@@ -55,8 +55,8 @@ const FriendsList = () => {
 			msOverflowStyle: 'none',
 		}}>
 			{friends.map((friend) => (
-				<div key={friend._id} className='text-white feed-userListBg'>
-					<div className='postBg  flex justify-between items-center p-4'>
+				<div key={friend._id} className='text-white feed-userListBg pt-4'>
+					<div className='postBg rounded-lg shadow-md flex justify-between items-center p-4'>
 						<button className="text-2xl">{friend.username}{' '}</button>
 							<button className='buttons hover:bg-purple-400 text-white px-4 py-2 rounded' id={friend._id} onClick={(e) => handleDeleteFriend(e.target.getAttribute('id') )}>
 							Remove Friend

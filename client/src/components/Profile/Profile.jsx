@@ -61,8 +61,8 @@ function Profile () {
     };
 
     return (
-        <div className='profile relative'>
-            <div className='profilePic rounded-full mx-auto border-2 mb-4 relative'>
+        <div className='profile relative pt-6 w-full rounded-md p-2'>
+            <div className='profilePic rounded-full mx-auto border-2 my-3 pt-1 relative'>
                 <img src={ dragonFly } alt='dragonfly' className='object-fill'/>
                 <div className='settingsIcon absolute bottom-0 right-3 mb-2 mr-2' style={{ zIndex: 1, margin: '-3px 10px -8px'}}>
                     <button onClick ={() => setShowModal(true)} style={{ zIndex: 1 }}><IoSettingsOutline /></button>
@@ -70,7 +70,7 @@ function Profile () {
             </div>
             <div className='flex flex-col items-center text-center'>
                 <div className='profileName mt-5'>{userInfo.userName}</div>
-                <div className='bio mb-5'>{userInfo.userBio}</div>
+                <div className='bio mb-6'>{userInfo.userBio}</div>
             </div>
 
             <div className='container flex justify-center'>
