@@ -11,15 +11,12 @@ const AddUser = () => {
 	const [addFriend] = useMutation(ADD_FRIEND);
 	const [users, setUsers] = useState([]);
 	const { loading, error, data } = useQuery(ALL_USERS);
-	const [savedUserIds, setSavedUserIds] =
-		useState(
-			getSavedUserIds()
-		);
+	const [savedUserIds, setSavedUserIds] = useState(
+		getSavedUserIds()
+	);
 
 	useEffect(() => {
-		
-			return () => saveFriendsId(savedUserIds);
-		
+		return () => saveFriendsId(savedUserIds);
 	});
 
 	if (loading) return <p>Loading...</p>;
@@ -76,9 +73,9 @@ const AddUser = () => {
 		}
 	};
 
-		const filteredUsers = allUsers.filter(
-			(user) => !savedUserIds.includes(user._id)
-		);
+	const filteredUsers = allUsers.filter(
+		(username) => !savedUserIds.includes(username._id)
+	);
 	return (
 		<div
 			style={{

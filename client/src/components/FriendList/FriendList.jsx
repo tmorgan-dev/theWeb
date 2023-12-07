@@ -1,22 +1,25 @@
 // FriendsList.js
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
 import { DELETE_FRIEND } from '../../utils/mutation';
 import { removeFriend } from '../../utils/localstorage';
 
 const FriendsList = () => {
-	const { loading, error, data } = useQuery(QUERY_ME)
-	
-	// console.log(data);
-	
-	const [deleteFriend] = useMutation(DELETE_FRIEND)
+	const { loading, error, data, refetch } =
+		useQuery(QUERY_ME);
+	const [deleteFriend] = useMutation(DELETE_FRIEND);
+	const [friends, setFriends] = useState([]);
+
+	useEffect(() => {
+		if (data?.me) {
+			setFriends(data.me.friends);
+		}
+	}, [data]);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
-
-	const { friends } = data?.me;
 
 	if (!friends.length) {
 		return (
@@ -26,41 +29,50 @@ const FriendsList = () => {
 		);
 	}
 
-	const handleDeleteFriend = async (friendsId) => {
-		// console.log(friendsId);
-		try {
-			const data = await deleteFriend({
-				variables: {
-					friendsId: friendsId,
-				},
-				// refetchQueries: () => [
-				// 	{
-				// 		query: QUERY_ME,
-				// 	},
-				// ],
-			});
+const handleDeleteFriend = async (friendId) => {
+	try {
+		await deleteFriend({
+			variables: {
+				friendsId: friendId,
+			},
+		});
 
-			removeFriend(friendsId);
-			// console.log(data);
-		} catch (err) {
-			console.error(err);
-		}
-	};
+		removeFriend(friendId);
+
+		setFriends((prevFriends) =>
+			prevFriends.filter((friend) => friend._id !== friendId)
+		);
+	} catch (err) {
+		console.error(err);
+	}
+};
 
 	return (
 		<div
-		style={{
-			overflowY: 'auto',
-			scrollbarWidth: 'none',
-			msOverflowStyle: 'none',
-		}}>
+			style={{
+				overflowY: 'auto',
+				scrollbarWidth: 'none',
+				msOverflowStyle: 'none',
+			}}
+		>
 			{friends.map((friend) => (
-				<div key={friend._id} className='text-white feed-userListBg pt-4'>
+				<div
+					key={friend._id}
+					className='text-white feed-userListBg pt-4'
+				>
 					<div className='postBg rounded-lg shadow-md flex justify-between items-center p-4'>
-						<button className="text-2xl">{friend.username}{' '}</button>
-							<button className='buttons hover:bg-purple-400 text-white px-4 py-2 rounded' id={friend._id} onClick={(e) => handleDeleteFriend(e.target.getAttribute('id') )}>
+						<button className='text-2xl'>
+							{friend.username}{' '}
+						</button>
+						<button
+							className='buttons hover:bg-purple-400 text-white px-4 py-2 rounded'
+							id={friend._id}
+							onClick={(e) =>
+								handleDeleteFriend(e.target.getAttribute('id'))
+							}
+						>
 							Remove Friend
-							</button>
+						</button>
 					</div>
 				</div>
 			))}
