@@ -100,9 +100,9 @@ const AddUser = () => {
 				{filteredUsers.map((user) => (
 					<div
 						key={user._id}
-						className='text-white feed-userListBg'
+						className='text-white feed-userListBg pt-4'
 					>
-						<div className='postBg flex justify-between items-center p-4'>
+						<div className='postBg rounded-lg shadow-md flex justify-between items-center p-4'>
 							<p className='text-2xl'>{user.username}</p>
 							<button
 								onClick={() =>
