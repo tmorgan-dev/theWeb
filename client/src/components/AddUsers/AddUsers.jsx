@@ -6,6 +6,7 @@ import {
 	saveFriendsId,
 	getSavedUserIds,
 } from '../../utils/localstorage';
+import Auth from '../../utils/auth';
 
 const AddUser = () => {
 	const [addFriend] = useMutation(ADD_FRIEND);
@@ -21,6 +22,7 @@ const AddUser = () => {
 			return () => saveFriendsId(savedUserIds);
 		
 	});
+	//try useeffect on gettoken from the auth.js file
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
@@ -46,6 +48,11 @@ const AddUser = () => {
 	};
 
 	const handleAddFriend = async (_id) => {
+					const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+					if (!token) {
+						return false;
+					}
 		const userToSave = allUsers.find(
 			(user) => user._id === _id
 		);
@@ -77,8 +84,10 @@ const AddUser = () => {
 	};
 
 		const filteredUsers = allUsers.filter(
-			(user) => !savedUserIds.includes(user._id)
+			(username) => !savedUserIds.includes(username._id)
 		);
+	console.log(filteredUsers);
+//log now showing filtered users minus the added user, still working on filtering logged user
 	return (
 		<div
 			style={{
