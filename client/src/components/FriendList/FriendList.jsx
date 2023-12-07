@@ -21,23 +21,31 @@ const FriendsList = () => {
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
 
-	const handleDeleteFriend = async (friendId) => {
-		try {
-			await deleteFriend({
-				variables: {
-					friendsId: friendId,
-				},
-			});
+	if (!friends.length) {
+		return (
+			<h4 className='text-white postBg text-2xl'>
+				No friends. Go make some nerd :D
+			</h4>
+		);
+	}
 
-			removeFriend(friendId);
+const handleDeleteFriend = async (friendId) => {
+	try {
+		await deleteFriend({
+			variables: {
+				friendsId: friendId,
+			},
+		});
 
-			setFriends((prevFriends) =>
-				prevFriends.filter((friend) => friend._id !== friendId)
-			);
-		} catch (err) {
-			console.error(err);
-		}
-	};
+		removeFriend(friendId);
+
+		setFriends((prevFriends) =>
+			prevFriends.filter((friend) => friend._id !== friendId)
+		);
+	} catch (err) {
+		console.error(err);
+	}
+};
 
 	return (
 		<div
@@ -47,47 +55,40 @@ const FriendsList = () => {
 				msOverflowStyle: 'none',
 			}}
 		>
-			{friends.length === 0 ? (
-				<h4 className='text-white postBg text-2xl'>
-					No friends. Go make some nerd :D
-				</h4>
-			) : (
-				friends.map((friend) => (
-					<div
-						key={friend._id}
-						className='text-white feed-userListBg'
-					>
-						<div className='postBg  flex justify-between items-center p-4'>
-							<button className='text-2xl'>
-								{friend.username}
-							</button>
-							<button
-								className='buttons hover:bg-purple-400 text-white px-4 py-2 rounded'
-								id={friend._id}
-								onClick={(e) =>
-									handleDeleteFriend(e.target.getAttribute('id'))
-								}
-							>
-								Remove Friend
-							</button>
-						</div>
+			{friends.map((friend) => (
+				<div
+					key={friend._id}
+					className='text-white feed-userListBg pt-4'
+				>
+					<div className='postBg rounded-lg shadow-md flex justify-between items-center p-4'>
+						<button className='text-2xl'>
+							{friend.username}{' '}
+						</button>
+						<button
+							className='buttons hover:bg-purple-400 text-white px-4 py-2 rounded'
+							id={friend._id}
+							onClick={(e) =>
+								handleDeleteFriend(e.target.getAttribute('id'))
+							}
+						>
+							Remove Friend
+						</button>
 					</div>
-				))
-			)}
+				</div>
+			))}
 			<style>
 				{`
-          /* Hide the scrollbar for WebKit browsers */
-          ::-webkit-scrollbar {
-            display: none;
-          }
-          /* Hide scrollbar for Firefox */
-          scrollbar-width: none;
-          /* Hide scrollbar for IE/Edge */
-          -ms-overflow-style: none;
-        `}
+      /* Hide the scrollbar for WebKit browsers */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      /* Hide scrollbar for Firefox */
+      scrollbar-width: none;
+      /* Hide scrollbar for IE/Edge */
+      -ms-overflow-style: none;
+    `}
 			</style>
 		</div>
 	);
 };
-
 export default FriendsList;
