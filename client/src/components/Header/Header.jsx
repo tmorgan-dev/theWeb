@@ -9,7 +9,7 @@ function Header() {
 	const isLoggedIn = AuthService.loggedIn();
 
 	return (
-		<nav className='text-white fixed w-full top-O'>
+		<nav className='text-white fixed top-0 left-0 w-full z-50'>
 			<div className='container-fluid flex items-center'>
 				<div className='flex items-center'>
 					<img src={spoderLogo} alt='spider logo' className='mt-1 mr-2' width='50' height='50'></img>
@@ -17,8 +17,8 @@ function Header() {
 				</div>
 				{isLoggedIn && (
 					<div className='ml-auto'>
-						<div className='mr-2'>
-							<Link to="#" className="logout-link" onClick={() => AuthService.logout()}>Logout</Link>
+						<div className='mr-3'>
+							<Link to="#" className="logout-link" onClick={() => AuthService.logout()}>logout</Link>
 						</div>
 					</div>
 				)}
