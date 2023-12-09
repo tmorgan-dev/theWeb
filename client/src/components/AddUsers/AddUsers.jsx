@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { ALL_USERS } from '../../utils/queries';
+import { ALL_USERS, QUERY_ME } from '../../utils/queries';
 import { ADD_FRIEND } from '../../utils/mutation';
 import {
 	saveFriendsId,
@@ -8,9 +8,17 @@ import {
 } from '../../utils/localstorage';
 
 const AddUser = () => {
+	const {
+		loading: userLoading,
+		error: userError,
+		data: userData,
+	} = useQuery(QUERY_ME);
 	const [addFriend] = useMutation(ADD_FRIEND);
-	const [users, setUsers] = useState([]);
-	const { loading, error, data } = useQuery(ALL_USERS);
+	const {
+		loading: allUsersLoading,
+		error: allUsersError,
+		data: allUsersData,
+	} = useQuery(ALL_USERS);
 	const [savedUserIds, setSavedUserIds] = useState(
 		getSavedUserIds()
 	);
@@ -19,28 +27,16 @@ const AddUser = () => {
 		return () => saveFriendsId(savedUserIds);
 	});
 
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error.message}</p>;
+	if (userLoading || allUsersLoading) return <p>Loading...</p>;
+	if (userError)
+		return <p>Error fetching user data: {userError.message}</p>;
+	if (allUsersError)
+		return (
+			<p>Error fetching all users: {allUsersError.message}</p>
+		);
 
-	const allUsers = data.users;
-
-	const handleFormSubmit = async (event) => {
-		event.preventDefault();
-		if (!data) {
-			return false;
-		}
-
-		try {
-			const dbUserList = allUsers.map((user) => ({
-				username: user.username,
-				friendsId: user._id || ['nothing to show'],
-			}));
-
-			setUsers(dbUserList);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+	const loggedInUser = userData?.me;
+	const allUsers = allUsersData?.users || [];
 
 	const handleAddFriend = async (_id) => {
 		const userToSave = allUsers.find(
@@ -60,22 +56,21 @@ const AddUser = () => {
 				],
 			});
 
-			setUsers((prevUsers) =>
-				prevUsers.map((user) =>
-					user._id === _id ? { ...user, added: true } : user
-				)
-			);
-
-			setSavedUserIds((prevIds) => [...prevIds, _id]);
-			saveFriendsId(String(userToSave.friendsId));
+			setSavedUserIds((prevIds) => [
+				...prevIds,
+				userToSave._id,
+			]);
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
 	const filteredUsers = allUsers.filter(
-		(username) => !savedUserIds.includes(username._id)
+		(user) =>
+			user._id !== loggedInUser?._id &&
+			!savedUserIds.includes(user._id)
 	);
+
 	return (
 		<div
 			style={{
@@ -84,7 +79,7 @@ const AddUser = () => {
 				msOverflowStyle: 'none',
 			}}
 		>
-			<form onSubmit={handleFormSubmit}>
+			<form>
 				{filteredUsers.map((user) => (
 					<div
 						key={user._id}
